@@ -44,6 +44,50 @@ catalog idea and re-targets each role at the primitive that now fits it best.
 | Workflows are documentation | Orchestration is executable (subagents, Agent tool, GitHub Actions) | RSI pipeline ships as a runnable plugin/action, not a diagram |
 | Testing = "paste it and see" | Agent SDK evals, LLM-as-judge in CI | Roles get behavioural test suites |
 
+### 2.1 Standards alignment — is there a standardised way to do this, and does it cover every role?
+
+The repo's core intent — package *focus, instructions, and a persona* as a reusable
+artifact — now has real standards behind parts of it. But the standards split that intent
+into **three different things**, and they don't cover all of it:
+
+| Concern | Standard | Status |
+|---|---|---|
+| **Procedure** ("how to do a task") | **Agent Skills** (`SKILL.md` — open spec published by Anthropic, adopted beyond Claude Code) | Real, open, cross-harness |
+| **Policy** ("rules while working here") | **`AGENTS.md`** (cross-vendor de-facto standard) / `CLAUDE.md` | De-facto standard |
+| **Delivery/discovery** ("find and fetch a role at runtime") | **MCP prompts primitive** (`prompts/list` / `prompts/get`) — the standards-track successor to `index.yaml` + `resolve.sh` | Real, open protocol |
+| **Pipeline workers** | Subagent files (`.claude/agents/*.md`) | Harness convention, *not* a cross-vendor standard |
+| **Conversational persona** ("who to be for a whole conversation") | **None.** The system prompt is a convention, not a spec. Vendor containers (Projects, custom GPTs, Gems) are proprietary and mutually incompatible | **Gap** |
+
+Mapped onto the catalog:
+
+| Role class | Roles | Standards coverage |
+|---|---|---|
+| Procedural / single-shot | CRA, QAVE, AGL, PRIME, SCOUT, ATLAS, SPRAY | **Full** — Agent Skills |
+| Pipeline auditors + orchestrator | SENTRY, PROBE, GUIDE, SPARK, RSI | **Partial** — skills spec covers the definition; the *orchestration* is harness convention |
+| Policy remnant | FORGE (extracted discipline) | **Full** — AGENTS.md/CLAUDE.md |
+| Conversational personas | P.S.Y., F.R.A.N.K., V.I.T.A., P.A.P.A., A.G.O.R.A., M.E.N.T.O.R., T.A.G., H.E.I.S.T., D.I.C.E., E.C.H.O., M.U.S.E. | **Definition: no standard.** Delivery: MCP prompts standardises the *transport*, not the artifact |
+
+So the honest answer is **no — the standardised way does not account for every role**.
+Roughly half the catalog (and arguably its most distinctive half: the health and
+entertainment personas) lives exactly where the ecosystem has *not* standardised. The
+industry standardised "agents that do tasks", not "personas you talk to".
+
+Consequences baked into this plan:
+
+1. **Adopt the standards where they exist.** Generated `SKILL.md` files follow the open
+   Agent Skills spec (portable beyond Claude Code); policy ships as AGENTS.md snippets;
+   the skills/subagent split in §3.3 follows this table, not taste.
+2. **Where no standard exists, own the format.** The canonical `role.md` (§3.1) *is* our
+   persona format — versioned, schema-validated, eval-gated. Since nobody's spec covers
+   conversational personas, a disciplined in-house format with generated exports is the
+   correct move, and positions the repo to adopt (or inform) a persona standard if one
+   emerges.
+3. **Standardise delivery even for non-standard artifacts.** The MCP server (§3.6) is
+   promoted from stretch goal to the *primary standards-track channel for persona roles*:
+   any MCP-capable client can `prompts/get` a persona with arguments (e.g. crisis region)
+   — replacing what `index.yaml` + `resolve.sh` were invented for, with an actual
+   protocol.
+
 ---
 
 ## 3. Target architecture
@@ -174,8 +218,11 @@ Replace `scripts/test-roles.sh` (structural checks) with two layers:
    through one major version, marked legacy.
 4. **GitHub Action**: `rsi-audit` as a reusable action (the README already references
    `action-rsi` — make it real from the new pipeline).
-5. **MCP server** (stretch, phase 4): a tiny server exposing `list_roles` / `get_role` so any
-   MCP-capable client can pull roles at runtime.
+5. **MCP server** (phase 4, promoted from stretch — see §2.1): a small server exposing the
+   catalog through the MCP **prompts primitive** (`prompts/list` / `prompts/get`, with
+   arguments such as crisis region). This is the standards-track successor to
+   `index.yaml` + `resolve.sh`, and the only standardised delivery channel that covers the
+   conversational personas.
 
 ---
 
@@ -210,9 +257,11 @@ Each phase is a mergeable milestone; the repo stays consumable throughout.
 
 **Phase 4 — Evals & release**
 - Behavioural eval suites for all kept roles (health first, they gate Phase 2 completion).
+- MCP server exposing the catalog via the prompts primitive (§2.1, §3.6) — the
+  standards-track delivery channel for the persona roles.
 - `v2.0.0` release: new README (lead with "install the plugin", keep "paste a prompt"),
   migration guide for submodule consumers, plugin marketplace submission.
-- Stretch: MCP server, OpenAI/GPT export target.
+- Stretch: OpenAI/GPT export target.
 
 ---
 
