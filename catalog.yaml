@@ -1,0 +1,86 @@
+# =============================================================================
+# Catalog — module metadata and cross-role workflows
+# =============================================================================
+# Source of truth for everything in index.yaml that is not owned by a single
+# role. Per-role metadata lives in roles/<category>/<slug>/role.md frontmatter.
+# tools/build.py merges this file with the role frontmatter to generate
+# index.yaml and dist/prompts/.
+# =============================================================================
+
+module:
+  name: agent-roledefinitions-submodule
+  version: "2.0.0-alpha.1"
+  description: >
+    A library of structured LLM agent system prompts. Each role is a single
+    self-contained role.md (metadata frontmatter + prompt body). The build
+    tool compiles roles into paste-ready prompts under dist/prompts/ and a
+    machine-readable index.yaml. No external infrastructure required.
+  license: MIT
+  author: "Jerry van Heerikhuize"
+  repository: https://github.com/jvanheerikhuize/Agent-Roles
+
+# Category ordering for the generated index (roles sorted by slug within each).
+categories:
+  - entertainment
+  - engineering
+  - health
+  - education
+  - utility
+  - productivity
+
+workflows:
+
+  engineering-pipeline:
+    name: "Engineering Pipeline"
+    description: >
+      Diff review followed by quality validation: the code review's output
+      feeds the quality gate.
+    steps:
+      - cra
+      - qave
+
+  education-vwo:
+    name: "VWO Study Support"
+    description: >
+      Parent briefing followed by student coaching. The parent gets context
+      first; the student then runs a study session.
+    steps:
+      - scout
+      - mentor
+
+  entertainment-gm:
+    name: "Entertainment Game Masters"
+    description: >
+      Interchangeable game master roles. The orchestrator can coordinate
+      the others in a multi-player session.
+    members:
+      - tag
+      - heist
+      - dice
+      - echo
+    orchestrator: echo
+
+  health-crisis-safety:
+    name: "Health and Crisis Safety"
+    description: >
+      Health-adjacent roles sharing crisis detection infrastructure,
+      GDPR Art. 9 handling, and safe-messaging protocols.
+    members:
+      - psy
+      - frank
+      - papa
+      - vita
+
+  rsi-audit-pipeline:
+    name: "RSI Audit Pipeline"
+    description: >
+      Recursive Self-Improvement audit pipeline. Four specialist auditors
+      run in parallel on a repository, then the orchestrator merges and
+      deduplicates their findings into a single coherent report. Used by
+      the action-rsi GitHub Action for automated codebase audits.
+    members:
+      - sentry
+      - probe
+      - guide
+      - spark
+    orchestrator: rsi
