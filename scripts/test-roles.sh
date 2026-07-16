@@ -3,10 +3,10 @@
 # Runs without LLM API keys; checks invariants that do not require execution.
 #
 # Checks per role:
-#   1. prompt.md exists and is non-empty.
-#   2. prompt.md does not exceed a soft token budget (~6k tokens == ~24k chars).
-#   3. If semanticode variant is declared in index.yaml, it exists and is shorter
-#      than the canonical prompt (compression sanity check).
+#   1. The built prompt (dist/prompts/<slug>.md) exists and is non-empty.
+#   2. The prompt does not exceed a soft size budget.
+#   3. If a semanticode variant is declared in index.yaml, it exists and is
+#      shorter than the canonical prompt (legacy check; v2 entries declare none).
 #   4. Health / minors-involved roles contain an explicit safety-notes marker.
 #   5. No hardcoded crisis numbers outside config/crisis-resources.yaml.
 #

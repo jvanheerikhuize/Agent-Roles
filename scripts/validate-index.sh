@@ -79,7 +79,7 @@ while IFS= read -r rel; do
     fi
 done < <(
     awk '
-        /^      prompt:/ || /^      semanticode:/ || /^      variant:/ {
+        /^      prompt:/ || /^      source:/ || /^      semanticode:/ || /^      variant:/ {
             val = $0
             sub(/^      [a-z]+: */, "", val)
             gsub(/"/, "", val)
