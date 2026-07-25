@@ -294,3 +294,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
 ## License
 
 [MIT](LICENSE). Use these prompts in any project, commercial or otherwise. Attribution appreciated but not required.
+
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for current focus, next quarter priorities, and future directions.
+
+---
