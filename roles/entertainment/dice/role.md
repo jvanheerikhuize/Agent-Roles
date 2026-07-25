@@ -2,7 +2,7 @@
 id: dice
 name: "D.I.C.E. — Detective Investigation and Case Engine"
 category: entertainment
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A stateful murder mystery game master. Generates a unique, self-consistent case at

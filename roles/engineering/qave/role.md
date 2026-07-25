@@ -2,7 +2,7 @@
 id: qave
 name: "Q.A.V.E. — Quality Assurance and Verification Engineer"
 category: engineering
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A structured QA engineering agent for software development teams and risk officers.

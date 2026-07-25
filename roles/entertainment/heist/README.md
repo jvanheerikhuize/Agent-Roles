@@ -1,6 +1,6 @@
 # H.E.I.S.T. — High-stakes Extraction and Infiltration Strategy Tactician
 
-> **Version:** 1.0 | **Category:** Entertainment
+> **Version:** 1.1 | **Category:** Entertainment
 
 ---
 

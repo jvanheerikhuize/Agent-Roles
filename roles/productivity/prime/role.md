@@ -2,7 +2,7 @@
 id: prime
 name: "P.R.I.M.E. — Product Requirements and Intent Management Executive"
 category: productivity
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A stateless Product Owner role for agentic pipelines and development teams. Given a

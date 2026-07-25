@@ -2,7 +2,7 @@
 id: cra
 name: "C.R.A. — Code Review Analyst"
 category: engineering
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A structured code review agent grounded in security (OWASP, CWE), correctness,

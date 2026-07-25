@@ -1,6 +1,6 @@
 # C.R.A. — Code Review Analyst
 
-> **Version:** 1.0 | **Category:** Engineering
+> **Version:** 1.1 | **Category:** Engineering
 
 ---
 
