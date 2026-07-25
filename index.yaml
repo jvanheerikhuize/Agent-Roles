@@ -1,127 +1,28 @@
 # =============================================================================
 # Module Index — agent-roledefinitions-submodule
 # =============================================================================
-# Single entrypoint for consuming repositories.
-# Parse this file to discover all available roles and their prompt file paths.
+# GENERATED FILE — do not edit by hand.
+# Source of truth: roles/<category>/<slug>/role.md + catalog.yaml.
+# Regenerate with: python3 tools/build.py
 # =============================================================================
 
 module:
   name: agent-roledefinitions-submodule
-  version: "1.0.0"
+  version: "2.0.0-alpha.1"
   description: >
-    A library of structured LLM agent system prompts. Each role is self-contained
-    and paste-and-play — paste into a chat session, inject as an API system prompt,
-    or load the file path directly from your agent framework. No external
-    infrastructure required.
+    A library of structured LLM agent system prompts. Each role is a single self-
+    contained role.md (metadata frontmatter + prompt body). The build tool compiles
+    roles into paste-ready prompts under dist/prompts/ and a machine-readable
+    index.yaml. No external infrastructure required.
   license: MIT
   author: "Jerry van Heerikhuize"
-  repository: https://github.com/jvanheerikhuize/agent-roledefinitions-submodule
-
-# Prompt files available per role.
-# - prompt:      Canonical full-length prompt. Most readable; uncompressed.
-# - variant:     Always null. Reserved for future use.
-# - semanticode: SemantiCode logic stream. Lossless compression (~35% reduction).
-#                Directly executable by any advanced LLM.
+  repository: https://github.com/jvanheerikhuize/Agent-Roles
 
 roles:
 
   # ---------------------------------------------------------------------------
   # Entertainment
   # ---------------------------------------------------------------------------
-
-  - id: tag
-    name: "T.A.G. — Text Adventure Generator"
-    slug: tag
-    category: entertainment
-    version: "2.2"
-    status: stable       # stable | beta | deprecated
-
-    files:
-      prompt: roles/entertainment/tag/prompt.md
-      variant: null
-      semanticode: roles/entertainment/tag/prompt-semanticode.md
-
-    description: >
-      A stateful text adventure game master. Takes any setting, lore, and player
-      profile and runs a fully rules-governed, turn-based narrative RPG. Features
-      session state, inventory physics, NPC relationships, quest tracking, and a
-      debug console.
-
-    tags:
-      - entertainment
-      - stateful
-      - game-master
-      - multi-turn
-
-    usage:
-      paste_in: true       # Can be pasted into a chat session
-      system_prompt: true  # Can be injected as an API system prompt
-      auto_init: true      # Agent initialises itself without user input
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: public
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-11"
-      last_updated: "2026-03-14"
-
-    relations:
-      group: entertainment-gm
-
-  - id: heist
-    name: "H.E.I.S.T. — High-stakes Extraction and Infiltration Strategy Tactician"
-    slug: heist
-    category: entertainment
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/entertainment/heist/prompt.md
-      variant: null
-      semanticode: roles/entertainment/heist/prompt-semanticode.md
-
-    description: >
-      A cinematic heist game master. Generates a self-contained job at session start —
-      target, security layout, guard schedules, and one hidden exploitable weakness —
-      then locks the truth before the player's first move. Sessions run across three
-      mandatory phases: RECON (five intel actions to gather information), PLAN (crew
-      assembly and approach design, assessed for logic), and EXECUTE (turn-by-turn
-      resolution against the locked layout). Every job ends in exactly one verdict:
-      CLEAN, DIRTY, or BURNED. Tone: dry, cinematic, unhurried — equal measure for
-      clean exits and spectacular failures. Language-adaptive.
-
-    tags:
-      - entertainment
-      - heist
-      - stateful
-      - strategy
-      - planning
-      - multi-phase
-      - multi-turn
-      - language-adaptive
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true      # Generates job brief without user input
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: public
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-    relations:
-      group: entertainment-gm
 
   - id: dice
     name: "D.I.C.E. — Detective Investigation and Case Engine"
@@ -131,19 +32,18 @@ roles:
     status: stable
 
     files:
-      prompt: roles/entertainment/dice/prompt.md
-      variant: null
-      semanticode: roles/entertainment/dice/prompt-semanticode.md
+      prompt: dist/prompts/dice.md
+      source: roles/entertainment/dice/role.md
 
     description: >
       A stateful murder mystery game master. Generates a unique, self-consistent case
-      at every session start — victim, 3-5 suspects, motive, means, clues, red herrings
-      — and locks the truth before the first player input. Features a per-suspect
-      deception model (levels 1-5) with a CRACK mechanic triggered by presenting the
-      right evidence. Two wrong accusations end the game. Language-adaptive: mirrors
-      the player's input language for the full session. Tone: dry, witty, sarcastic
-      Infocom narrator. Win condition: correct ACCUSATION matched against hidden
-      TRUTH_RECORD.
+      at every session start — victim, 3-5 suspects, motive, means, clues, red
+      herrings — and locks the truth before the first player input. Features a per-
+      suspect deception model (levels 1-5) with a CRACK mechanic triggered by
+      presenting the right evidence. Two wrong accusations end the game. Language-
+      adaptive: mirrors the player's input language for the full session. Tone: dry,
+      witty, sarcastic Infocom narrator. Win condition: correct ACCUSATION matched
+      against hidden TRUTH_RECORD.
 
     tags:
       - entertainment
@@ -155,10 +55,14 @@ roles:
       - infocom
       - humor
 
+    targets:
+      - system-prompt
+    interaction: conversational
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Generates and renders opening scene without user input
+      auto_init: true
 
     governance:
       risk_tier: low
@@ -182,20 +86,20 @@ roles:
     status: stable
 
     files:
-      prompt: roles/entertainment/echo/prompt.md
-      variant: null
-      semanticode: roles/entertainment/echo/prompt-semanticode.md
+      prompt: dist/prompts/echo.md
+      source: roles/entertainment/echo/role.md
 
     description: >
       A multi-player text adventure game system built on a hub-and-spoke architecture.
-      One Game Master prompt runs the world; the GM's LLM generates private player prompts
-      (spokes) that each player loads into their own LLM session. Supports 14 game types
-      (whodunnit, heist, quest, conspiracy, espionage, inheritance, escape_room, rebellion,
-      expedition, diplomacy, haunted, shipwreck, tournament, courtroom) — selected by the GM
-      or drawn at random. Each game type produces asymmetric roles, private knowledge, and
-      per-player win/fail conditions. The GM relays player actions; E.C.H.O. adjudicates,
-      updates global state, and returns per-player relay text without leaking private information.
-      Dutch output throughout; dry Infocom-style narration.
+      One Game Master prompt runs the world; the GM's LLM generates private player
+      prompts (spokes) that each player loads into their own LLM session. Supports 14
+      game types (whodunnit, heist, quest, conspiracy, espionage, inheritance,
+      escape_room, rebellion, expedition, diplomacy, haunted, shipwreck, tournament,
+      courtroom) — selected by the GM or drawn at random. Each game type produces
+      asymmetric roles, private knowledge, and per-player win/fail conditions. The GM
+      relays player actions; E.C.H.O. adjudicates, updates global state, and returns
+      per-player relay text without leaking private information. Dutch output
+      throughout; dry Infocom-style narration.
 
     tags:
       - entertainment
@@ -209,10 +113,14 @@ roles:
       - text-adventure
       - language-directive
 
+    targets:
+      - system-prompt
+    interaction: conversational
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Renders welcome and awaits GM configuration on session start
+      auto_init: true
 
     governance:
       risk_tier: low
@@ -228,6 +136,60 @@ roles:
     relations:
       group: entertainment-gm
 
+  - id: heist
+    name: "H.E.I.S.T. — High-stakes Extraction and Infiltration Strategy Tactician"
+    slug: heist
+    category: entertainment
+    version: "1.0"
+    status: stable
+
+    files:
+      prompt: dist/prompts/heist.md
+      source: roles/entertainment/heist/role.md
+
+    description: >
+      A cinematic heist game master. Generates a self-contained job at session start —
+      target, security layout, guard schedules, and one hidden exploitable weakness —
+      then locks the truth before the player's first move. Sessions run across three
+      mandatory phases: RECON (five intel actions to gather information), PLAN (crew
+      assembly and approach design, assessed for logic), and EXECUTE (turn-by-turn
+      resolution against the locked layout). Every job ends in exactly one verdict:
+      CLEAN, DIRTY, or BURNED. Tone: dry, cinematic, unhurried — equal measure for
+      clean exits and spectacular failures. Language-adaptive.
+
+    tags:
+      - entertainment
+      - heist
+      - stateful
+      - strategy
+      - planning
+      - multi-phase
+      - multi-turn
+      - language-adaptive
+
+    targets:
+      - system-prompt
+    interaction: conversational
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: true
+
+    governance:
+      risk_tier: low
+      ai_tier: minimal
+      data_classification: public
+      gdpr_special_category: false
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-03-18"
+      last_updated: "2026-03-18"
+
+    relations:
+      group: entertainment-gm
+
   - id: muse
     name: "M.U.S.E. — Master of Unbounded Studio Exploration"
     slug: muse
@@ -236,19 +198,18 @@ roles:
     status: stable
 
     files:
-      prompt: roles/entertainment/muse/prompt.md
-      variant: null
-      semanticode: roles/entertainment/muse/prompt-semanticode.md
+      prompt: dist/prompts/muse.md
+      source: roles/entertainment/muse/role.md
 
     description: >
       An artist's companion — part muse, part master, part co-conspirator. Generates
-      creative inspiration, challenges comfort zones, and translates any artistic impulse
-      into a concrete, actionable creation plan regardless of medium or technique. Operates
-      across four phases (IGNITE, EXPLORE, TRANSLATE, MAKE) with a built-in failure logging
-      system that treats disasters as learning opportunities. A comprehensive Technique Atlas
-      spanning 10 creative domains ensures M.U.S.E. can meet any artist wherever they are.
-      Tone: casual, direct, provocative, inspirational — speaks as a master to a pupil.
-      Language-adaptive.
+      creative inspiration, challenges comfort zones, and translates any artistic
+      impulse into a concrete, actionable creation plan regardless of medium or
+      technique. Operates across four phases (IGNITE, EXPLORE, TRANSLATE, MAKE) with a
+      built-in failure logging system that treats disasters as learning opportunities.
+      A comprehensive Technique Atlas spanning 10 creative domains ensures M.U.S.E.
+      can meet any artist wherever they are. Tone: casual, direct, provocative,
+      inspirational — speaks as a master to a pupil. Language-adaptive.
 
     tags:
       - entertainment
@@ -261,6 +222,10 @@ roles:
       - multi-turn
       - language-adaptive
       - humor
+
+    targets:
+      - system-prompt
+    interaction: conversational
 
     usage:
       paste_in: true
@@ -278,6 +243,52 @@ roles:
       created: "2026-04-01"
       last_updated: "2026-04-01"
 
+  - id: tag
+    name: "T.A.G. — Text Adventure Generator"
+    slug: tag
+    category: entertainment
+    version: "2.2"
+    status: stable
+
+    files:
+      prompt: dist/prompts/tag.md
+      source: roles/entertainment/tag/role.md
+
+    description: >
+      A stateful text adventure game master. Takes any setting, lore, and player
+      profile and runs a fully rules-governed, turn-based narrative RPG. Features
+      session state, inventory physics, NPC relationships, quest tracking, and a debug
+      console.
+
+    tags:
+      - entertainment
+      - stateful
+      - game-master
+      - multi-turn
+
+    targets:
+      - system-prompt
+    interaction: conversational
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: true
+
+    governance:
+      risk_tier: low
+      ai_tier: minimal
+      data_classification: public
+      gdpr_special_category: false
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-03-11"
+      last_updated: "2026-03-14"
+
+    relations:
+      group: entertainment-gm
+
   # ---------------------------------------------------------------------------
   # Engineering
   # ---------------------------------------------------------------------------
@@ -290,15 +301,14 @@ roles:
     status: stable
 
     files:
-      prompt: roles/engineering/cra/prompt.md
-      variant: null
-      semanticode: roles/engineering/cra/prompt-semanticode.md
+      prompt: dist/prompts/cra.md
+      source: roles/engineering/cra/role.md
 
     description: >
       A structured code review agent grounded in security (OWASP, CWE), correctness,
       performance, and maintainability. Takes a diff or file list and produces a
-      scored, verdict-driven review report. Tracks findings with severity ratings
-      and blocks merges when a risk score threshold is exceeded.
+      scored, verdict-driven review report. Tracks findings with severity ratings and
+      blocks merges when a risk score threshold is exceeded.
 
     tags:
       - engineering
@@ -308,10 +318,14 @@ roles:
       - owasp
       - cwe
 
+    targets:
+      - system-prompt
+    interaction: single-shot
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for diff input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -325,143 +339,43 @@ roles:
       last_updated: "2026-03-14"
 
     relations:
-      chain_after: [forge]
       chain_before: [qave]
 
-  - id: forge
-    name: "F.O.R.G.E. — Full-stack Operations and Repository Guidance Engineer"
-    slug: forge
+  - id: guide
+    name: "G.U.I.D.E. — Guided Understanding & Inclusive Documentation Evaluator"
+    slug: guide
     category: engineering
     version: "1.0"
     status: stable
 
     files:
-      prompt: roles/engineering/forge/prompt.md
-      variant: null
-      semanticode: roles/engineering/forge/prompt-semanticode.md
+      prompt: dist/prompts/guide.md
+      source: roles/engineering/guide/role.md
 
     description: >
-      A senior full-stack engineering agent covering frontend, backend, databases, APIs,
-      DevOps, and infrastructure. Given a task, ticket, or architecture question, F.O.R.G.E.
-      guides work from branch creation through detailed implementation to a complete pull
-      request summary. Enforces a strict branch-first, PR-always discipline — no changes
-      land on a protected branch without a pull request. Security findings (OWASP Top 10,
-      CWE) are surfaced on every code change. Infrastructure changes are expressed as IaC
-      with rollback plans. Serves product owners, security, risk, architects, developers,
-      and automated agents in agentic pipelines.
+      An empathetic documentation auditor for the RSI audit pipeline. Evaluates a
+      codebase from a new contributor's perspective — identifying onboarding gaps,
+      stale documentation, missing guides, undocumented configuration, and
+      architecture knowledge that exists only in developers' heads. Single-shot:
+      receives repository context, returns structured JSON findings.
 
     tags:
       - engineering
-      - full-stack
-      - devops
-      - infra
-      - code-review
-      - branch-discipline
-      - security
-      - stateful
-      - agentic
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: false     # Waits for task, ticket, or architecture question
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: internal
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-    relations:
-      chain_before: [cra]
-
-  - id: qave
-    name: "Q.A.V.E. — Quality Assurance and Verification Engineer"
-    slug: qave
-    category: engineering
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/engineering/qave/prompt.md
-      variant: null
-      semanticode: roles/engineering/qave/prompt-semanticode.md
-
-    description: >
-      A structured QA engineering agent for software development teams and risk officers.
-      Submit a ticket, specification, diff, or test scenario and Q.A.V.E. returns the
-      appropriate QA artefact — test plan, defect report, risk assessment, or coverage
-      analysis — with explicit severity labels (CRITICAL/HIGH/MEDIUM/LOW/INFO) and a
-      binding VERDICT (PASS/FAIL/BLOCKED/NEEDS_CLARIFICATION). Every test plan includes
-      a gap list. Q.A.V.E. does not write production code or approve deployments.
-
-    tags:
-      - engineering
-      - quality-assurance
-      - test-planning
-      - defect-reporting
-      - risk-assessment
-      - coverage-analysis
-      - stateful
-      - verdict-driven
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: false     # Waits for ticket, spec, diff, or test scenario
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: internal
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-    relations:
-      chain_after: [cra]
-
-  - id: sentry
-    name: "S.E.N.T.R.Y. — Security Evaluation & Network Threat Response Yield"
-    slug: sentry
-    category: engineering
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/engineering/sentry/prompt.md
-      variant: null
-      semanticode: null
-
-    description: >
-      An adversarial security auditor for the RSI audit pipeline. Thinks like an
-      attacker — traces untrusted input through code paths, hunts injection vectors,
-      broken authentication, leaked credentials, and dependency risks that automated
-      SAST tools miss. Single-shot: receives repository context, returns structured
-      JSON findings. Does not write code or engage in conversation.
-
-    tags:
-      - engineering
-      - security
-      - adversarial
+      - documentation
+      - empathetic
       - rsi-pipeline
       - audit
       - stateless
       - single-task
-      - owasp
+
+    targets:
+      - system-prompt
+    interaction: pipeline
 
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for repository context input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -485,16 +399,15 @@ roles:
     status: stable
 
     files:
-      prompt: roles/engineering/probe/prompt.md
-      variant: null
-      semanticode: null
+      prompt: dist/prompts/probe.md
+      source: roles/engineering/probe/role.md
 
     description: >
       An analytical code quality auditor for the RSI audit pipeline. Traces logic
       paths to find bugs, race conditions, error handling gaps, cross-file interaction
-      failures, and resource management issues that automated linters miss. Single-shot:
-      receives repository context, returns structured JSON findings. Does not write
-      code or engage in conversation.
+      failures, and resource management issues that automated linters miss. Single-
+      shot: receives repository context, returns structured JSON findings. Does not
+      write code or engage in conversation.
 
     tags:
       - engineering
@@ -505,10 +418,14 @@ roles:
       - stateless
       - single-task
 
+    targets:
+      - system-prompt
+    interaction: pipeline
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for repository context input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -524,38 +441,95 @@ roles:
     relations:
       group: rsi-audit-pipeline
 
-  - id: guide
-    name: "G.U.I.D.E. — Guided Understanding & Inclusive Documentation Evaluator"
-    slug: guide
+  - id: qave
+    name: "Q.A.V.E. — Quality Assurance and Verification Engineer"
+    slug: qave
     category: engineering
     version: "1.0"
     status: stable
 
     files:
-      prompt: roles/engineering/guide/prompt.md
-      variant: null
-      semanticode: null
+      prompt: dist/prompts/qave.md
+      source: roles/engineering/qave/role.md
 
     description: >
-      An empathetic documentation auditor for the RSI audit pipeline. Evaluates a
-      codebase from a new contributor's perspective — identifying onboarding gaps,
-      stale documentation, missing guides, undocumented configuration, and architecture
-      knowledge that exists only in developers' heads. Single-shot: receives repository
-      context, returns structured JSON findings.
+      A structured QA engineering agent for software development teams and risk
+      officers. Submit a ticket, specification, diff, or test scenario and Q.A.V.E.
+      returns the appropriate QA artefact — test plan, defect report, risk assessment,
+      or coverage analysis — with explicit severity labels
+      (CRITICAL/HIGH/MEDIUM/LOW/INFO) and a binding VERDICT
+      (PASS/FAIL/BLOCKED/NEEDS_CLARIFICATION). Every test plan includes a gap list.
+      Q.A.V.E. does not write production code or approve deployments.
 
     tags:
       - engineering
-      - documentation
-      - empathetic
-      - rsi-pipeline
-      - audit
-      - stateless
-      - single-task
+      - quality-assurance
+      - test-planning
+      - defect-reporting
+      - risk-assessment
+      - coverage-analysis
+      - stateful
+      - verdict-driven
+
+    targets:
+      - system-prompt
+    interaction: single-shot
 
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for repository context input
+      auto_init: false
+
+    governance:
+      risk_tier: low
+      ai_tier: minimal
+      data_classification: internal
+      gdpr_special_category: false
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-03-18"
+      last_updated: "2026-03-18"
+
+    relations:
+      chain_after: [cra]
+
+  - id: sentry
+    name: "S.E.N.T.R.Y. — Security Evaluation & Network Threat Response Yield"
+    slug: sentry
+    category: engineering
+    version: "1.0"
+    status: stable
+
+    files:
+      prompt: dist/prompts/sentry.md
+      source: roles/engineering/sentry/role.md
+
+    description: >
+      An adversarial security auditor for the RSI audit pipeline. Thinks like an
+      attacker — traces untrusted input through code paths, hunts injection vectors,
+      broken authentication, leaked credentials, and dependency risks that automated
+      SAST tools miss. Single-shot: receives repository context, returns structured
+      JSON findings. Does not write code or engage in conversation.
+
+    tags:
+      - engineering
+      - security
+      - adversarial
+      - rsi-pipeline
+      - audit
+      - stateless
+      - single-task
+      - owasp
+
+    targets:
+      - system-prompt
+    interaction: pipeline
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -579,16 +553,16 @@ roles:
     status: stable
 
     files:
-      prompt: roles/engineering/spark/prompt.md
-      variant: null
-      semanticode: null
+      prompt: dist/prompts/spark.md
+      source: roles/engineering/spark/role.md
 
     description: >
       A creative innovation analyst for the RSI audit pipeline. Identifies high-value
-      improvements, modernisation opportunities, integration possibilities, and developer
-      experience enhancements — grounded in web research about current industry trends
-      and the project's specific tech stack. Single-shot: receives repository context
-      and web research, returns structured JSON proposals with effort estimates.
+      improvements, modernisation opportunities, integration possibilities, and
+      developer experience enhancements — grounded in web research about current
+      industry trends and the project's specific tech stack. Single-shot: receives
+      repository context and web research, returns structured JSON proposals with
+      effort estimates.
 
     tags:
       - engineering
@@ -599,10 +573,14 @@ roles:
       - stateless
       - single-task
 
+    targets:
+      - system-prompt
+    interaction: pipeline
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for repository context input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -622,65 +600,6 @@ roles:
   # Health
   # ---------------------------------------------------------------------------
 
-  - id: psy
-    name: "P.S.Y. — Trauma-Specialised Psychologist"
-    slug: psy
-    category: health
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/health/psy/prompt.md
-      variant: null
-      semanticode: roles/health/psy/prompt-semanticode.md
-
-    description: >
-      A trauma-informed psychoeducation and emotional support companion grounded in
-      the SAMHSA six pillars of trauma-informed care. Provides Phase 1 (Safety and
-      Stabilisation) support only: psychoeducation, grounding techniques, CBT-informed
-      reflection, and crisis escalation. Scoped strictly to Phase 1 — Phase 2/3
-      trauma processing requires in-person clinical supervision. Features mandatory
-      crisis detection, safe-messaging enforcement, GDPR Art. 9 disclosure, and
-      multi-language support (7 languages + default).
-
-    tags:
-      - health
-      - trauma-informed
-      - psychoeducation
-      - crisis-safety
-      - gdpr
-      - multi-language
-      - stateful
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This prompt is health-adjacent and targets a vulnerable user population.
-      Before deploying in any product context, review:
-      - Crisis line numbers are current and correct for your target region
-      - Safe-messaging guidelines are appropriate for your jurisdiction
-      - GDPR Art. 9 disclosure wording meets your legal obligations
-      - Phase 1 scope limits are appropriate for your use case
-      This prompt is NOT a substitute for licensed clinical care.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: restricted
-      gdpr_special_category: true      # GDPR Art. 9 — mental health data
-      eu_ai_act_tier: limited
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-14"
-      last_updated: "2026-03-14"
-
-    relations:
-      group: health-crisis-safety
-
   - id: frank
     name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
     slug: frank
@@ -689,15 +608,14 @@ roles:
     status: stable
 
     files:
-      prompt: roles/health/frank/prompt.md
-      variant: null
-      semanticode: roles/health/frank/prompt-semanticode.md
+      prompt: dist/prompts/frank.md
+      source: roles/health/frank/role.md
 
     description: >
       A relationship psychoeducation and self-reflection agent grounded in attachment
-      theory, Emotionally Focused Therapy (EFT), and Gottman-informed practice.
-      Guides single-user sessions through a structured lifecycle (Check-in → Explore
-      → Insight → Action → Close). Features calibrated dry wit (HUMOR_PROTOCOL),
+      theory, Emotionally Focused Therapy (EFT), and Gottman-informed practice. Guides
+      single-user sessions through a structured lifecycle (Check-in → Explore →
+      Insight → Action → Close). Features calibrated dry wit (HUMOR_PROTOCOL),
       relationship pattern identification (Four Horsemen, pursue-withdraw, attachment
       styles), domestic violence crisis detection with tiered response, individual-
       perspective integrity guard, and multi-language support (7 languages + default).
@@ -715,6 +633,10 @@ roles:
       - multi-language
       - stateful
       - humor
+
+    targets:
+      - system-prompt
+    interaction: conversational
 
     usage:
       paste_in: true
@@ -734,7 +656,7 @@ roles:
       risk_tier: medium
       ai_tier: limited
       data_classification: confidential
-      gdpr_special_category: conditional   # Art. 9(1) if mental health / DV data disclosed
+      gdpr_special_category: conditional
       eu_ai_act_tier: limited
 
     provenance:
@@ -753,18 +675,18 @@ roles:
     status: stable
 
     files:
-      prompt: roles/health/papa/prompt.md
-      variant: null
-      semanticode: roles/health/papa/prompt-semanticode.md
+      prompt: dist/prompts/papa.md
+      source: roles/health/papa/role.md
 
     description: >
       A parenting companion for divorced dads raising a teenage son in a co-parenting
       arrangement. Gives practical, plain-language advice — including the actual words
       to say — and explains the motivations on both sides: what is driving the dad's
-      own reactions, and what is likely going on for a teenage boy (born 2011) navigating
-      two homes and growing up. Grounded in the week-on/week-off co-parenting rhythm with
-      a Wednesday custody switch. Features a dark-humor register directed at parenting
-      absurdity, multilingual support, and GDPR Art. 9 disclosure at session open.
+      own reactions, and what is likely going on for a teenage boy (born 2011)
+      navigating two homes and growing up. Grounded in the week-on/week-off co-
+      parenting rhythm with a Wednesday custody switch. Features a dark-humor register
+      directed at parenting absurdity, multilingual support, and GDPR Art. 9
+      disclosure at session open.
 
     tags:
       - health
@@ -776,10 +698,14 @@ roles:
       - gdpr
       - stateful
 
+    targets:
+      - system-prompt
+    interaction: conversational
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Opens with intro, GDPR note, and asks what's on the dad's mind
+      auto_init: true
 
     safety_notes: |
       This role processes family and relationship data, including information about a minor.
@@ -796,13 +722,75 @@ roles:
       risk_tier: medium
       ai_tier: limited
       data_classification: confidential
-      gdpr_special_category: true      # GDPR Art. 9 — family and mental health data
+      gdpr_special_category: true
       eu_ai_act_tier: limited
 
     provenance:
       author: "Jerry van Heerikhuize"
       created: "2026-03-18"
       last_updated: "2026-03-18"
+
+    relations:
+      group: health-crisis-safety
+
+  - id: psy
+    name: "P.S.Y. — Trauma-Specialised Psychologist"
+    slug: psy
+    category: health
+    version: "1.0"
+    status: stable
+
+    files:
+      prompt: dist/prompts/psy.md
+      source: roles/health/psy/role.md
+
+    description: >
+      A trauma-informed psychoeducation and emotional support companion grounded in
+      the SAMHSA six pillars of trauma-informed care. Provides Phase 1 (Safety and
+      Stabilisation) support only: psychoeducation, grounding techniques, CBT-informed
+      reflection, and crisis escalation. Scoped strictly to Phase 1 — Phase 2/3 trauma
+      processing requires in-person clinical supervision. Features mandatory crisis
+      detection, safe-messaging enforcement, GDPR Art. 9 disclosure, and multi-
+      language support (7 languages + default).
+
+    tags:
+      - health
+      - trauma-informed
+      - psychoeducation
+      - crisis-safety
+      - gdpr
+      - multi-language
+      - stateful
+
+    targets:
+      - system-prompt
+    interaction: conversational
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: true
+
+    safety_notes: |
+      This prompt is health-adjacent and targets a vulnerable user population.
+      Before deploying in any product context, review:
+      - Crisis line numbers are current and correct for your target region
+      - Safe-messaging guidelines are appropriate for your jurisdiction
+      - GDPR Art. 9 disclosure wording meets your legal obligations
+      - Phase 1 scope limits are appropriate for your use case
+      This prompt is NOT a substitute for licensed clinical care.
+
+    governance:
+      risk_tier: medium
+      ai_tier: limited
+      data_classification: restricted
+      gdpr_special_category: true
+      eu_ai_act_tier: limited
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-03-14"
+      last_updated: "2026-03-14"
 
     relations:
       group: health-crisis-safety
@@ -815,16 +803,15 @@ roles:
     status: stable
 
     files:
-      prompt: roles/health/vita/prompt.md
-      variant: null
-      semanticode: roles/health/vita/prompt-semanticode.md
+      prompt: dist/prompts/vita.md
+      source: roles/health/vita/role.md
 
     description: >
       A personal lifestyle coaching companion covering three pillars: Food, Activity,
-      and Mental Health. Guides users through a structured session lifecycle
-      (OPEN → CHECK_IN → FOCUS_AREA → EXPLORE → ACTION_PLAN → CLOSE) and produces
-      one micro-habit commitment per session. Applies Motivational Interviewing (OARS),
-      CBT reframing, habit loop analysis, and positive psychology. Features dry/witty
+      and Mental Health. Guides users through a structured session lifecycle (OPEN →
+      CHECK_IN → FOCUS_AREA → EXPLORE → ACTION_PLAN → CLOSE) and produces one micro-
+      habit commitment per session. Applies Motivational Interviewing (OARS), CBT
+      reframing, habit loop analysis, and positive psychology. Features dry/witty
       HUMOR_PROTOCOL, mandatory crisis detection, safe-messaging enforcement, GDPR
       Art. 9 disclosure, and multi-language support (7 languages + default).
 
@@ -839,6 +826,10 @@ roles:
       - multi-language
       - stateful
       - humor
+
+    targets:
+      - system-prompt
+    interaction: conversational
 
     usage:
       paste_in: true
@@ -858,7 +849,7 @@ roles:
       risk_tier: medium
       ai_tier: limited
       data_classification: restricted
-      gdpr_special_category: true      # GDPR Art. 9 — Mental Health is a core pillar
+      gdpr_special_category: true
       eu_ai_act_tier: limited
 
     provenance:
@@ -881,19 +872,19 @@ roles:
     status: stable
 
     files:
-      prompt: roles/education/agora/prompt.md
-      variant: null
-      semanticode: roles/education/agora/prompt-semanticode.md
+      prompt: dist/prompts/agora.md
+      source: roles/education/agora/role.md
 
     description: >
-      A philosophical inquiry companion for curious people of all ages and backgrounds.
-      Named after the Greek gathering place of open dialogue, A.G.O.R.A. brings any
-      question into a Socratic conversation — its job is not to give answers but to help
-      users ask questions they did not know they had. Tracks threads and depth across turns,
-      synthesises key pivots, and uses dark absurdist humor directed at ideas — never the user.
-      Includes mandatory crisis detection, personal boundary safeguards, and full multilingual
-      support, making it deployable in contexts where minors or emotionally vulnerable users
-      may be present.
+      A philosophical inquiry companion for curious people of all ages and
+      backgrounds. Named after the Greek gathering place of open dialogue, A.G.O.R.A.
+      brings any question into a Socratic conversation — its job is not to give
+      answers but to help users ask questions they did not know they had. Tracks
+      threads and depth across turns, synthesises key pivots, and uses dark absurdist
+      humor directed at ideas — never the user. Includes mandatory crisis detection,
+      personal boundary safeguards, and full multilingual support, making it
+      deployable in contexts where minors or emotionally vulnerable users may be
+      present.
 
     tags:
       - education
@@ -905,10 +896,14 @@ roles:
       - humor
       - crisis-safety
 
+    targets:
+      - system-prompt
+    interaction: conversational
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Opens with a welcome and invites the first question
+      auto_init: true
 
     safety_notes: |
       This role includes crisis detection and targets a broad audience including minors.
@@ -924,12 +919,66 @@ roles:
       data_classification: internal
       gdpr_special_category: false
       eu_ai_act_tier: limited
-      minors_involved: true         # GDPR Art. 8 parental consent applies in production
+      minors_involved: true
 
     provenance:
       author: "Jerry van Heerikhuize"
       created: "2026-03-18"
       last_updated: "2026-03-18"
+
+  - id: mentor
+    name: "M.E.N.T.O.R. — Methodical Educational Navigator for Teaching, Outcomes, and Review"
+    slug: mentor
+    category: education
+    version: "1.0"
+    status: stable
+
+    files:
+      prompt: dist/prompts/mentor.md
+      source: roles/education/mentor/role.md
+
+    description: >
+      A study and exam coaching companion for VWO klas 3 students covering wiskunde,
+      natuurkunde, and scheikunde. Guides through a structured session lifecycle (OPEN
+      → TOPIC_SELECT → DIAGNOSE → TEACH → PRACTICE → REVIEW → CLOSE) using the
+      Socratic method — asks before telling, never gives answers outright. Detects and
+      addresses root misconceptions, not just surface errors. Dutch output by default.
+      HUMOR_PROTOCOL: dark, sarcastic, deadpan academic nihilism — never targeting the
+      student. Academic integrity enforced.
+
+    tags:
+      - education
+      - study-coach
+      - socratic-method
+      - dutch
+      - vwo
+      - stateful
+      - humor
+      - academic-integrity
+
+    targets:
+      - system-prompt
+    interaction: conversational
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: true
+
+    governance:
+      risk_tier: low
+      ai_tier: minimal
+      data_classification: internal
+      gdpr_special_category: false
+      minors_involved: true
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-03-17"
+      last_updated: "2026-03-17"
+
+    relations:
+      companions: [scout]
 
   - id: scout
     name: "S.C.O.U.T. — Strategic Curriculum Overview and Understanding Translator"
@@ -939,17 +988,16 @@ roles:
     status: stable
 
     files:
-      prompt: roles/education/scout/prompt.md
-      variant: null
-      semanticode: roles/education/scout/prompt-semanticode.md
+      prompt: dist/prompts/scout.md
+      source: roles/education/scout/role.md
 
     description: >
       A stateless, single-task parental support tool and companion to M.E.N.T.O.R.
-      Given a VWO subject and topic, produces a structured four-part THEME_OVERVIEW
-      in Dutch: Focus (what the student must master for the test), De Logica (one
-      adult-world analogy), De Valkuilen (the 3 most common student errors), and
-      De Lakmoesproef (one sharp diagnostic question for the parent). Anchored to
-      SLO VWO eindtermen. Addressed to the parent throughout; never to the student.
+      Given a VWO subject and topic, produces a structured four-part THEME_OVERVIEW in
+      Dutch: Focus (what the student must master for the test), De Logica (one adult-
+      world analogy), De Valkuilen (the 3 most common student errors), and De
+      Lakmoesproef (one sharp diagnostic question for the parent). Anchored to SLO VWO
+      eindtermen. Addressed to the parent throughout; never to the student.
 
     tags:
       - education
@@ -961,10 +1009,14 @@ roles:
       - single-task
       - slo-eindtermen
 
+    targets:
+      - system-prompt
+    interaction: single-shot
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for [VAK + ONDERWERP] input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -980,57 +1032,6 @@ roles:
     relations:
       companions: [mentor]
 
-  - id: mentor
-    name: "M.E.N.T.O.R. — Methodical Educational Navigator for Teaching, Outcomes, and Review"
-    slug: mentor
-    category: education
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/education/mentor/prompt.md
-      variant: null
-      semanticode: roles/education/mentor/prompt-semanticode.md
-
-    description: >
-      A study and exam coaching companion for VWO klas 3 students covering wiskunde,
-      natuurkunde, and scheikunde. Guides through a structured session lifecycle
-      (OPEN → TOPIC_SELECT → DIAGNOSE → TEACH → PRACTICE → REVIEW → CLOSE) using the
-      Socratic method — asks before telling, never gives answers outright. Detects and
-      addresses root misconceptions, not just surface errors. Dutch output by default.
-      HUMOR_PROTOCOL: dark, sarcastic, deadpan academic nihilism — never targeting
-      the student. Academic integrity enforced.
-
-    tags:
-      - education
-      - study-coach
-      - socratic-method
-      - dutch
-      - vwo
-      - stateful
-      - humor
-      - academic-integrity
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: internal
-      gdpr_special_category: false
-      minors_involved: true         # GDPR Art. 8 parental consent applies in production
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-17"
-      last_updated: "2026-03-17"
-
-    relations:
-      companions: [scout]
-
   # ---------------------------------------------------------------------------
   # Utility
   # ---------------------------------------------------------------------------
@@ -1043,9 +1044,8 @@ roles:
     status: stable
 
     files:
-      prompt: roles/utility/atlas/prompt.md
-      variant: null
-      semanticode: roles/utility/atlas/prompt-semanticode.md
+      prompt: dist/prompts/atlas.md
+      source: roles/utility/atlas/role.md
 
     description: >
       A stateless, single-task ASCII cartography service agent. Accepts geographic
@@ -1063,10 +1063,14 @@ roles:
       - floor-plan
       - geographic
 
+    targets:
+      - system-prompt
+    interaction: single-shot
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for coordinate input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -1087,17 +1091,17 @@ roles:
     status: stable
 
     files:
-      prompt: roles/utility/spray/prompt.md
-      variant: null
-      semanticode: null
+      prompt: dist/prompts/spray.md
+      source: roles/utility/spray/role.md
 
     description: >
-      A professional stencil conversion tool for graffiti artists and makers. Accepts an
-      image of a stencil design and outputs a 3D-printable SVG with guaranteed structural
-      integrity — no floating islands, every region connected via automatically placed
-      bridges. Supports configurable threshold, bridge density, output dimensions, and
-      multi-layer colour stencil sets with registration marks. Core constraint: the output
-      is always one connected piece that holds together when lifted.
+      A professional stencil conversion tool for graffiti artists and makers. Accepts
+      an image of a stencil design and outputs a 3D-printable SVG with guaranteed
+      structural integrity — no floating islands, every region connected via
+      automatically placed bridges. Supports configurable threshold, bridge density,
+      output dimensions, and multi-layer colour stencil sets with registration marks.
+      Core constraint: the output is always one connected piece that holds together
+      when lifted.
 
     tags:
       - utility
@@ -1110,10 +1114,14 @@ roles:
       - single-task
       - language-adaptive
 
+    targets:
+      - system-prompt
+    interaction: conversational
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for stencil image input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -1125,53 +1133,6 @@ roles:
       author: "Jerry van Heerikhuize"
       created: "2026-04-06"
       last_updated: "2026-04-06"
-
-  - id: scribe
-    name: "S.C.R.I.B.E. — Semantic Compression and Reasoning-Informed Brevity Encoder"
-    slug: scribe
-    category: utility
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: roles/utility/scribe/prompt.md
-      variant: null
-      semanticode: roles/utility/scribe/prompt-semanticode.md
-
-    description: >
-      A stateless, single-task semantic compilation agent. Accepts any structured
-      system prompt and compiles it into a SemantiCode logic stream — a token-efficient,
-      abbreviated notation that retains full semantic fidelity and is directly executable
-      by any advanced LLM. Three compression modes: LOSSLESS (≥35% token reduction,
-      default), BALANCED (≥55%), and AGGRESSIVE (≥70%, advanced LLMs recommended).
-
-    tags:
-      - utility
-      - compiler
-      - compression
-      - stateless
-      - single-task
-      - prompt-engineering
-      - semanticode
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: false     # Waits for a prompt to compile
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: public
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-17"
-      last_updated: "2026-03-17"
-
-    relations:
-      meta_target: all
 
   # ---------------------------------------------------------------------------
   # Productivity
@@ -1185,16 +1146,15 @@ roles:
     status: stable
 
     files:
-      prompt: roles/productivity/agl/prompt.md
-      variant: null
-      semanticode: roles/productivity/agl/prompt-semanticode.md
+      prompt: dist/prompts/agl.md
+      source: roles/productivity/agl/role.md
 
     description: >
       A stateless, single-purpose EU AI Act tier classifier. Given any AI component
-      description or change request, issues a structured VERDICT block (tier, rationale
-      citing specific EU AI Act articles, control obligations, and escalation conditions).
-      Refuses downgrade requests without documented evidence. Persona: a regulator,
-      not a collaborator — terse, professional, binding.
+      description or change request, issues a structured VERDICT block (tier,
+      rationale citing specific EU AI Act articles, control obligations, and
+      escalation conditions). Refuses downgrade requests without documented evidence.
+      Persona: a regulator, not a collaborator — terse, professional, binding.
 
     tags:
       - productivity
@@ -1205,10 +1165,14 @@ roles:
       - single-task
       - compliance
 
+    targets:
+      - system-prompt
+    interaction: single-shot
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Outputs "Ready." on session start without user input
+      auto_init: true
 
     governance:
       risk_tier: low
@@ -1229,16 +1193,16 @@ roles:
     status: stable
 
     files:
-      prompt: roles/productivity/prime/prompt.md
-      variant: null
-      semanticode: roles/productivity/prime/prompt-semanticode.md
+      prompt: dist/prompts/prime.md
+      source: roles/productivity/prime/role.md
 
     description: >
       A stateless Product Owner role for agentic pipelines and development teams.
-      Given a feature specification or change request, issues a structured REVIEW block
-      (APPROVED / REJECTED / NEEDS_CLARIFICATION) with verdict, rationale against four
-      evaluation criteria (completeness, consistency, scope clarity, business value), and
-      a named open-items list. Refuses approval for incomplete or self-contradictory specs.
+      Given a feature specification or change request, issues a structured REVIEW
+      block (APPROVED / REJECTED / NEEDS_CLARIFICATION) with verdict, rationale
+      against four evaluation criteria (completeness, consistency, scope clarity,
+      business value), and a named open-items list. Refuses approval for incomplete or
+      self-contradictory specs.
 
     tags:
       - productivity
@@ -1248,10 +1212,14 @@ roles:
       - stateless
       - single-task
 
+    targets:
+      - system-prompt
+    interaction: single-shot
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: true      # Outputs "Ready." on session start without user input
+      auto_init: true
 
     governance:
       risk_tier: low
@@ -1272,16 +1240,15 @@ roles:
     status: stable
 
     files:
-      prompt: roles/productivity/rsi/prompt.md
-      variant: null
-      semanticode: null
+      prompt: dist/prompts/rsi.md
+      source: roles/productivity/rsi/role.md
 
     description: >
       The meta-governance layer of the RSI audit pipeline. Does not audit code
-      directly. Receives findings from S.E.N.T.R.Y., P.R.O.B.E., G.U.I.D.E.,
-      and S.P.A.R.K., then deduplicates, validates, prioritises, and produces a
-      single coherent audit report with authoritative context updates. The final
-      quality gate — output finding count is always less than input.
+      directly. Receives findings from S.E.N.T.R.Y., P.R.O.B.E., G.U.I.D.E., and
+      S.P.A.R.K., then deduplicates, validates, prioritises, and produces a single
+      coherent audit report with authoritative context updates. The final quality gate
+      — output finding count is always less than input.
 
     tags:
       - productivity
@@ -1293,10 +1260,14 @@ roles:
       - single-task
       - synthesis
 
+    targets:
+      - system-prompt
+    interaction: pipeline
+
     usage:
       paste_in: true
       system_prompt: true
-      auto_init: false     # Waits for merged findings input
+      auto_init: false
 
     governance:
       risk_tier: low
@@ -1312,30 +1283,22 @@ roles:
     relations:
       group: rsi-audit-pipeline
 
-# =============================================================================
-# Workflows — named multi-role composition patterns
-# =============================================================================
-# Sequential workflows use `steps` (order matters).
-# Group workflows use `members` (order irrelevant) + optional `orchestrator`.
-# =============================================================================
-
 workflows:
 
   engineering-pipeline:
     name: "Engineering Pipeline"
     description: >
-      Implementation to merge: code is written, the diff is reviewed,
-      then quality is validated. Each role's output feeds the next.
+      Diff review followed by quality validation: the code review's output feeds the
+      quality gate.
     steps:
-      - forge
       - cra
       - qave
 
   education-vwo:
     name: "VWO Study Support"
     description: >
-      Parent briefing followed by student coaching. The parent gets context
-      first; the student then runs a study session.
+      Parent briefing followed by student coaching. The parent gets context first; the
+      student then runs a study session.
     steps:
       - scout
       - mentor
@@ -1343,8 +1306,8 @@ workflows:
   entertainment-gm:
     name: "Entertainment Game Masters"
     description: >
-      Interchangeable game master roles. The orchestrator can coordinate
-      the others in a multi-player session.
+      Interchangeable game master roles. The orchestrator can coordinate the others in
+      a multi-player session.
     members:
       - tag
       - heist
@@ -1355,8 +1318,8 @@ workflows:
   health-crisis-safety:
     name: "Health and Crisis Safety"
     description: >
-      Health-adjacent roles sharing crisis detection infrastructure,
-      GDPR Art. 9 handling, and safe-messaging protocols.
+      Health-adjacent roles sharing crisis detection infrastructure, GDPR Art. 9
+      handling, and safe-messaging protocols.
     members:
       - psy
       - frank
@@ -1366,10 +1329,10 @@ workflows:
   rsi-audit-pipeline:
     name: "RSI Audit Pipeline"
     description: >
-      Recursive Self-Improvement audit pipeline. Four specialist auditors
-      run in parallel on a repository, then the orchestrator merges and
-      deduplicates their findings into a single coherent report. Used by
-      the action-rsi GitHub Action for automated codebase audits.
+      Recursive Self-Improvement audit pipeline. Four specialist auditors run in
+      parallel on a repository, then the orchestrator merges and deduplicates their
+      findings into a single coherent report. Used by the action-rsi GitHub Action for
+      automated codebase audits.
     members:
       - sentry
       - probe

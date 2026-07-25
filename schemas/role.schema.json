@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jvanheerikhuize/Agent-Roles/schemas/role.schema.json",
+  "title": "Agent-Roles role.md frontmatter",
+  "description": "Schema for the YAML frontmatter of roles/<category>/<slug>/role.md. The build tool (tools/build.py) enforces an equivalent set of rules in Python; this file exists for documentation and editor tooling. Note: `id` must equal the role's directory name and `category` its parent directory name — constraints a JSON Schema cannot express.",
+  "type": "object",
+  "required": [
+    "id", "name", "category", "version", "status", "description",
+    "tags", "targets", "interaction", "usage", "governance", "provenance"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Stable identifier; must equal the role directory name."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable display name, e.g. \"T.A.G. — Text Adventure Generator\"."
+    },
+    "category": {
+      "type": "string",
+      "enum": ["entertainment", "engineering", "health", "education", "utility", "productivity"],
+      "description": "Must equal the parent directory name and be listed in catalog.yaml categories."
+    },
+    "version": {
+      "type": "string",
+      "description": "Role version (semver-ish, quoted in YAML)."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["stable", "beta", "deprecated"]
+    },
+    "description": {
+      "type": "string",
+      "description": "One-paragraph summary; emitted as a folded block in index.yaml."
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["system-prompt", "subagent", "skill", "plugin", "gpt"]
+      },
+      "description": "Harness formats this role is built/maintained for. Phase 1 roles are all system-prompt; later phases add more."
+    },
+    "interaction": {
+      "type": "string",
+      "enum": ["conversational", "single-shot", "pipeline"],
+      "description": "conversational = multi-turn dialogue; single-shot = one input, one deliverable; pipeline = stage in an automated multi-agent pipeline."
+    },
+    "usage": {
+      "type": "object",
+      "required": ["paste_in", "system_prompt", "auto_init"],
+      "additionalProperties": false,
+      "properties": {
+        "paste_in": { "type": "boolean" },
+        "system_prompt": { "type": "boolean" },
+        "auto_init": { "type": "boolean" }
+      }
+    },
+    "safety_notes": {
+      "type": "string",
+      "description": "Required in practice for health-category roles and roles with governance.minors_involved (scripts/test-roles.sh greps prompts for safety language; this field documents the policy). Emitted as a literal block."
+    },
+    "governance": {
+      "type": "object",
+      "required": ["risk_tier", "ai_tier", "data_classification", "gdpr_special_category"],
+      "additionalProperties": false,
+      "properties": {
+        "risk_tier": { "type": "string", "enum": ["low", "medium", "high"] },
+        "ai_tier": { "type": "string" },
+        "data_classification": { "type": "string" },
+        "gdpr_special_category": { "type": "boolean" },
+        "eu_ai_act_tier": { "type": "string" },
+        "minors_involved": { "type": "boolean" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["author", "created", "last_updated"],
+      "additionalProperties": false,
+      "properties": {
+        "author": { "type": "string" },
+        "created": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "last_updated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+      }
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Named group of interchangeable/related roles (resolve.sh --group)."
+        },
+        "companions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Role ids that pair well with this one. Emitted inline ([a, b])."
+        },
+        "chain_after": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Role ids that should run before this one. Emitted inline — resolve.sh only parses the bracket form."
+        },
+        "chain_before": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Role ids that should run after this one. Emitted inline."
+        },
+        "meta_target": {
+          "type": "string",
+          "description": "For meta-roles that operate on other roles (e.g. \"all\")."
+        }
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ Have an idea for an AI persona that belongs in this library? Open an issue to sh
 
 Found a behaviour that feels off? A scenario the prompt doesn't handle well? A better way to phrase something? Open a pull request with your change and explain what it fixes and why.
 
-When improving a role, update both `prompt.md` and `prompt-semanticode.md` to keep them in sync.
+Edit the role's `role.md` (the single source), then run `python3 tools/build.py` and commit the regenerated `dist/` and `index.yaml` along with your change. Never edit `dist/` or `index.yaml` by hand — CI rejects stale or hand-edited artifacts.
 
 ### Report a bug
 
@@ -46,12 +46,19 @@ Early feedback saves rework later.
 
 **Step 2 -- Fork and build**
 
-Fork the repo and create your role under `roles/<category>/<slug>/`. Each role directory should contain:
-- `prompt.md` -- the full canonical system prompt
-- `prompt-semanticode.md` -- a compressed variant
+Fork the repo and create your role under `roles/<category>/<slug>/`. Each role directory contains:
+- `role.md` -- YAML frontmatter (metadata, governance, relations) followed by the full prompt body. See [`schemas/role.schema.json`](schemas/role.schema.json) for the frontmatter contract, or copy an existing role's frontmatter as a starting point.
 - `README.md` -- usage examples, API code, and safety notes
 
-Add an entry in `index.yaml` for your role.
+Then run the build and commit the generated artifacts:
+
+```bash
+python3 tools/build.py        # regenerates dist/prompts/<slug>.md and index.yaml
+scripts/validate-index.sh     # index ↔ disk consistency
+scripts/test-roles.sh         # structural smoke tests
+```
+
+There is no manual `index.yaml` step — the build generates your role's entry from the frontmatter.
 
 **Step 3 -- Open a pull request**
 
@@ -60,13 +67,15 @@ Submit your PR against `main`. Fill in the template with:
 - The concept and target user
 - Any design decisions that aren't obvious from the prompt itself
 
+CI runs the build and both validation scripts; it fails if `dist/` or `index.yaml` is out of date.
+
 ---
 
 ## Pull request guidelines
 
 - **One concern per PR** -- a new role, a prompt fix, or a docs update. Not all three at once.
 - **Test your prompt** -- paste it into at least one LLM and verify it behaves as intended before submitting.
-- **Keep `prompt.md` and `prompt-semanticode.md` in sync** -- if you change the canonical prompt, update the SemantiCode variant too.
+- **Commit source and artifacts together** -- every `role.md` change ships with the regenerated `dist/` and `index.yaml` in the same PR.
 - **Health and sensitive roles** -- if your role touches mental health, crisis risk, minors, or GDPR Art. 9 data, follow the safety notes pattern in existing health roles.
 - **Run `scripts/validate-index.sh`** before submitting. Fix any reported mismatches.
 
@@ -81,8 +90,8 @@ Every contributed role should meet the following bar before merge.
 - **Self-contained.** The prompt works when pasted into a fresh chat session with no prior context and no external tooling.
 - **LLM-agnostic.** Tested against at least two of: Claude, ChatGPT, Gemini. Note any model-specific behavior in the role README.
 - **Deterministic lifecycle.** The prompt defines explicit phases or states (OPEN → ... → CLOSE) rather than relying on the model to improvise structure.
-- **Token efficient.** Prompts should justify their length. Aim for < 6k tokens for `prompt.md`; use `prompt-semanticode.md` for the compressed variant. Cut anything that does not change observable behavior.
-- **Indexed.** Every role has an entry in `index.yaml` with accurate `files`, `tags`, `governance`, and `provenance` blocks.
+- **Token efficient.** Prompts should justify their length. Aim for < 6k tokens; cut anything that does not change observable behavior.
+- **Valid frontmatter.** The build fails on missing or invalid metadata — `tags`, `governance`, `provenance`, `targets`, and `interaction` must all be accurate.
 
 ### Cross-LLM compatibility
 
@@ -99,7 +108,7 @@ Required for any role tagged `health`, any role with `minors_involved: true`, or
 - [ ] **GDPR Art. 9 disclosure** shown at session open when special-category data is foreseeable.
 - [ ] **Scope limits** stated — what the role is NOT (e.g., "not a substitute for licensed care", "single-user perspective only").
 - [ ] **Age-appropriateness** — if minors may interact with the role, explicit language and topic guardrails.
-- [ ] **`safety_notes` block** present in `index.yaml` for the role, listing items the deployer must verify.
+- [ ] **`safety_notes` block** present in the role's frontmatter, listing items the deployer must verify.
 
 ### Governance metadata
 

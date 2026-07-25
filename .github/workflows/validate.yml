@@ -1,0 +1,35 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Build prompts and index
+        run: python3 tools/build.py
+
+      - name: Check committed artifacts are up to date
+        run: |
+          git diff --exit-code -- index.yaml dist/ || {
+            echo "::error::dist/ or index.yaml is stale — run 'python3 tools/build.py' and commit the result"
+            exit 1
+          }
+
+      - name: Validate index consistency
+        run: scripts/validate-index.sh
+
+      - name: Role smoke tests
+        run: scripts/test-roles.sh

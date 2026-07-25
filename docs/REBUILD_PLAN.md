@@ -230,18 +230,24 @@ Replace `scripts/test-roles.sh` (structural checks) with two layers:
 
 Each phase is a mergeable milestone; the repo stays consumable throughout.
 
-**Phase 0 — Scaffolding (no content changes)**
+**Phase 0 — Scaffolding (no content changes)** ✅ *done (2026-07)*
 - Add `docs/REBUILD_PLAN.md` (this file), `tools/` skeleton, frontmatter JSON schema.
 - Build tool that can *round-trip the current repo*: parse existing `index.yaml`, emit it
   back byte-stable. Proves the pipeline before anything moves.
-- CI: schema validation + build check (GitHub Actions).
+- CI: schema validation + build check (GitHub Actions). *(Shipped as
+  `.github/workflows/validate.yml`: build + stale-artifact check + validate-index +
+  smoke tests.)*
 
-**Phase 1 — Single source of truth**
+**Phase 1 — Single source of truth** ✅ *done (2026-07)*
 - Migrate all 25 roles to `role.md` with frontmatter (mechanical: fold index.yaml entries
-  into each role; prompt bodies unchanged).
-- `index.yaml` becomes generated; `resolve.sh` pointed at `dist/index.yaml`.
+  into each role; prompt bodies unchanged). *(23 migrated; S.C.R.I.B.E. and F.O.R.G.E.
+  archived instead — see below.)*
+- `index.yaml` becomes generated; `resolve.sh` pointed at `dist/index.yaml`. *(Kept the
+  generated index at the repo root so existing consumers' paths keep working; prompts
+  build to `dist/prompts/<slug>.md`.)*
 - Archive SemantiCode variants + S.C.R.I.B.E.; archive F.O.R.G.E. with its policy extracted
-  to a snippet. Tag `v1.x` final legacy release first so pinned consumers are unaffected.
+  to a snippet (`snippets/engineering-discipline.md`). Tag `v1.x` final legacy release
+  first so pinned consumers are unaffected. *(Tag still to be pushed by the maintainer.)*
 
 **Phase 2 — Prompt modernization**
 - Rewrite bodies per §3.2, one category per PR (order: engineering → utility →
