@@ -127,7 +127,7 @@ Works with any API that accepts a system prompt: Anthropic, OpenAI, Google, or y
 Add this library as a git submodule and load the full catalog at runtime:
 
 ```bash
-git submodule add https://github.com/jvanheerikhuize/agent-roledefinitions-submodule.git lib/roles
+git submodule add https://github.com/jvanheerikhuize/Agent-Roles.git lib/roles
 git submodule update --init
 ```
 
@@ -146,9 +146,9 @@ This repository is designed to be consumed by other repositories as a submodule 
 Pin to a version tag for reproducible builds:
 
 ```bash
-git submodule add https://github.com/jvanheerikhuize/agent-roledefinitions-submodule.git lib/roles
+git submodule add https://github.com/jvanheerikhuize/Agent-Roles.git lib/roles
 cd lib/roles && git checkout v1.0.0
-cd ../.. && git add . && git commit -m "add agent-roledefinitions-submodule v1.0.0"
+cd ../.. && git add . && git commit -m "add Agent-Roles v1.0.0"
 ```
 
 Update to a new version:
@@ -164,10 +164,10 @@ Fetch `index.yaml` or individual prompts directly. The tag in the URL pins the v
 
 ```bash
 # Fetch the manifest
-curl -s https://raw.githubusercontent.com/jvanheerikhuize/agent-roledefinitions-submodule/v1.0.0/index.yaml
+curl -s https://raw.githubusercontent.com/jvanheerikhuize/Agent-Roles/v1.0.0/index.yaml
 
 # Fetch a specific prompt
-curl -s https://raw.githubusercontent.com/jvanheerikhuize/agent-roledefinitions-submodule/v1.0.0/roles/engineering/forge/prompt.md
+curl -s https://raw.githubusercontent.com/jvanheerikhuize/Agent-Roles/v1.0.0/roles/engineering/forge/prompt.md
 ```
 
 Replace `v1.0.0` with `main` for the latest (unpinned) version.
@@ -177,7 +177,7 @@ Replace `v1.0.0` with `main` for the latest (unpinned) version.
 Every tagged release includes downloadable `.tar.gz` and `.zip` archives. Useful for CI/CD pipelines:
 
 ```bash
-curl -sL https://github.com/jvanheerikhuize/agent-roledefinitions-submodule/archive/refs/tags/v1.0.0.tar.gz | tar xz
+curl -sL https://github.com/jvanheerikhuize/Agent-Roles/archive/refs/tags/v1.0.0.tar.gz | tar xz
 ```
 
 ### Resolver script

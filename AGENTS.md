@@ -1,4 +1,4 @@
-# AGENTS.md -- agent-roledefinitions-submodule
+# AGENTS.md -- Agent-Roles
 
 This is a content library of LLM agent role definitions (system prompts).
 Any agent or framework can read this file to understand how to consume the library.
@@ -74,7 +74,7 @@ If your repo consumes this library, add the following to your own `AGENTS.md` or
 ```markdown
 ## External Libraries
 
-### agent-roledefinitions-submodule (LLM Role Library)
+### Agent-Roles (LLM Role Library)
 - Location: `lib/roles/` (git submodule)
 - Manifest: `lib/roles/index.yaml`
 - To load a role: parse index.yaml, find the role by id/slug/tags, read the file at `files.prompt` relative to the submodule root.

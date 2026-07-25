@@ -35,5 +35,5 @@ Consumers should pin to a specific tag:
 cd lib/roles && git checkout v1.0.0
 
 # Raw URL
-curl https://raw.githubusercontent.com/jvanheerikhuize/agent-roledefinitions-submodule/v1.0.0/index.yaml
+curl https://raw.githubusercontent.com/jvanheerikhuize/Agent-Roles/v1.0.0/index.yaml
 ```

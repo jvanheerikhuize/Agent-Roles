@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# resolve.sh -- Lightweight role resolver for agent-roledefinitions-submodule
+# resolve.sh -- Lightweight role resolver for Agent-Roles
 # Parses index.yaml using native bash/awk. Zero external dependencies.
 # Usage: ./resolve.sh --list | --id <id> | --category <cat> | --tag <tag> | ...
 
