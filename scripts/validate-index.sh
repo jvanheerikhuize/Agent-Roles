@@ -6,7 +6,9 @@
 #   1. Every role directory on disk has an index.yaml entry.
 #   2. Every index.yaml entry points at files that exist.
 #   3. The README role-count badge matches the actual count.
-#   4. (--check-crisis) config/crisis-resources.yaml entries are verified within
+#   4. index.yaml, prompt.md and README.md agree on each role's version and
+#      category (they store it three times; nothing else catches drift).
+#   5. (--check-crisis) config/crisis-resources.yaml entries are verified within
 #      the last 12 months.
 
 set -euo pipefail
@@ -106,7 +108,56 @@ if [[ -f "$README" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# 4. Crisis resources freshness (opt-in)
+# 4. Metadata agreement across index.yaml, prompt.md and README.md
+# ---------------------------------------------------------------------------
+# Role version and category live in three places today. Nothing regenerates
+# them, so they drift silently -- and every other check here is existence-
+# shaped ("the referenced file is present"), which cannot catch disagreement.
+# This check is agreement-shaped. It becomes redundant once role.md frontmatter
+# is the single source of truth (see ROADMAP.md phase 2); until then it is the
+# gate that keeps the three copies honest.
+echo "==> Metadata agreement"
+while IFS='|' read -r id category version prompt_rel; do
+    [[ -z "$id" ]] && continue
+    role_dir="$BASE_DIR/$(dirname "$prompt_rel")"
+
+    # Version as declared by the prompt and the role README, if they declare one.
+    for f in prompt.md README.md; do
+        path="$role_dir/$f"
+        [[ -f "$path" ]] || continue
+        declared=$(grep -oE '\*\*Version:\*\*[[:space:]]*[0-9]+(\.[0-9]+)*' "$path" |
+                   head -n1 | grep -oE '[0-9]+(\.[0-9]+)*' || true)
+        [[ -z "$declared" ]] && continue
+        if [[ "$declared" != "$version" ]]; then
+            fail "$id: $f says version $declared, index.yaml says $version"
+        fi
+    done
+
+    # Category is repeated in the role README header.
+    readme="$role_dir/README.md"
+    if [[ -f "$readme" ]]; then
+        rc=$(grep -oE '\*\*Category:\*\*[[:space:]]*[A-Za-z-]+' "$readme" |
+             head -n1 | sed -E 's/.*\*\*Category:\*\*[[:space:]]*//' || true)
+        if [[ -n "$rc" ]] && [[ "${rc,,}" != "${category,,}" ]]; then
+            fail "$id: README.md says category '$rc', index.yaml says '$category'"
+        fi
+    fi
+done < <(
+    awk '
+        /^  - id:/ {
+            if (id != "") print id "|" cat "|" ver "|" prompt
+            id = $0; sub(/^  - id: */, "", id)
+            cat = ""; ver = ""; prompt = ""
+        }
+        /^    category:/ { cat = $0; sub(/^    category: */, "", cat); gsub(/"/, "", cat) }
+        /^    version:/  { ver = $0; sub(/^    version: */, "", ver);  gsub(/"/, "", ver) }
+        /^      prompt:/ { prompt = $0; sub(/^      prompt: */, "", prompt); gsub(/"/, "", prompt) }
+        END { if (id != "") print id "|" cat "|" ver "|" prompt }
+    ' "$INDEX"
+)
+
+# ---------------------------------------------------------------------------
+# 5. Crisis resources freshness (opt-in)
 # ---------------------------------------------------------------------------
 if $CHECK_CRISIS; then
     echo "==> Crisis resources freshness"
