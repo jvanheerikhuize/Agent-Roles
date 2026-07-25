@@ -1,6 +1,6 @@
 # P.R.I.M.E. — Product Requirements and Intent Management Executive
 
-> **Version:** 1.0 | **Category:** Productivity
+> **Version:** 1.1 | **Category:** Productivity
 
 ---
 

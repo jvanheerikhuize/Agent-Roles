@@ -1,13 +1,13 @@
 # =============================================================================
-# Module Index — agent-roledefinitions-submodule
+# Module Index — Agent-Roles
 # =============================================================================
 # Single entrypoint for consuming repositories.
 # Parse this file to discover all available roles and their prompt file paths.
 # =============================================================================
 
 module:
-  name: agent-roledefinitions-submodule
-  version: "1.0.0"
+  name: Agent-Roles
+  version: "1.0.1"
   description: >
     A library of structured LLM agent system prompts. Each role is self-contained
     and paste-and-play — paste into a chat session, inject as an API system prompt,
@@ -15,7 +15,7 @@ module:
     infrastructure required.
   license: MIT
   author: "Jerry van Heerikhuize"
-  repository: https://github.com/jvanheerikhuize/agent-roledefinitions-submodule
+  repository: https://github.com/jvanheerikhuize/Agent-Roles
 
 # Prompt files available per role.
 # - prompt:      Canonical full-length prompt. Most readable; uncompressed.
@@ -76,7 +76,7 @@ roles:
     name: "H.E.I.S.T. — High-stakes Extraction and Infiltration Strategy Tactician"
     slug: heist
     category: entertainment
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -127,7 +127,7 @@ roles:
     name: "D.I.C.E. — Detective Investigation and Case Engine"
     slug: dice
     category: entertainment
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -286,7 +286,7 @@ roles:
     name: "C.R.A. — Code Review Analyst"
     slug: cra
     category: engineering
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -332,7 +332,7 @@ roles:
     name: "F.O.R.G.E. — Full-stack Operations and Repository Guidance Engineer"
     slug: forge
     category: engineering
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -384,7 +384,7 @@ roles:
     name: "Q.A.V.E. — Quality Assurance and Verification Engineer"
     slug: qave
     category: engineering
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -626,7 +626,7 @@ roles:
     name: "P.S.Y. — Trauma-Specialised Psychologist"
     slug: psy
     category: health
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -685,7 +685,7 @@ roles:
     name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
     slug: frank
     category: health
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -877,7 +877,7 @@ roles:
     name: "A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking"
     slug: agora
     category: education
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -1083,7 +1083,7 @@ roles:
     name: "S.P.R.A.Y. — Stencil Processor and Rapid Assembly Yielder"
     slug: spray
     category: utility
-    version: "1.0"
+    version: "2.0"
     status: stable
 
     files:
@@ -1130,7 +1130,7 @@ roles:
     name: "S.C.R.I.B.E. — Semantic Compression and Reasoning-Informed Brevity Encoder"
     slug: scribe
     category: utility
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -1181,7 +1181,7 @@ roles:
     name: "A.G.L. — Authoritative Governance Lead"
     slug: agl
     category: productivity
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:
@@ -1225,7 +1225,7 @@ roles:
     name: "P.R.I.M.E. — Product Requirements and Intent Management Executive"
     slug: prime
     category: productivity
-    version: "1.0"
+    version: "1.1"
     status: stable
 
     files:

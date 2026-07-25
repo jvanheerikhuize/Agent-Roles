@@ -1,6 +1,6 @@
 # F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots
 
-> **Version:** 1.0 | **Category:** Health
+> **Version:** 1.1 | **Category:** Health
 
 ---
 

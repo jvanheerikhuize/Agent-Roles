@@ -1,6 +1,6 @@
 # S.C.R.I.B.E. — Semantic Compression and Reasoning-Informed Brevity Encoder
 
-> **Version:** 1.0 | **Category:** Utility
+> **Version:** 1.1 | **Category:** Utility
 
 ---
 

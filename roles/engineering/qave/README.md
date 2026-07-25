@@ -1,6 +1,6 @@
 # Q.A.V.E. — Quality Assurance and Verification Engineer
 
-> **Version:** 1.0 | **Category:** Engineering
+> **Version:** 1.1 | **Category:** Engineering
 
 ---
 

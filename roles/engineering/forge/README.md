@@ -1,6 +1,6 @@
 # F.O.R.G.E. — Full-stack Operations and Repository Guidance Engineer
 
-> **Version:** 1.0 | **Category:** Engineering
+> **Version:** 1.1 | **Category:** Engineering
 
 ---
 
