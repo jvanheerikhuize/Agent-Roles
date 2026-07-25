@@ -1,6 +1,6 @@
 # A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking
 
-> **Version:** 1.0 | **Category:** Education
+> **Version:** 1.1 | **Category:** Education
 
 ---
 

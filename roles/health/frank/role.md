@@ -2,7 +2,7 @@
 id: frank
 name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
 category: health
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A relationship psychoeducation and self-reflection agent grounded in attachment

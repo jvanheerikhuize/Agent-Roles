@@ -1,6 +1,6 @@
 # A.G.L. — Authoritative Governance Lead
 
-> **Version:** 1.0 | **Category:** Productivity
+> **Version:** 1.1 | **Category:** Productivity
 
 ---
 

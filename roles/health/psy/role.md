@@ -2,7 +2,7 @@
 id: psy
 name: "P.S.Y. — Trauma-Specialised Psychologist"
 category: health
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A trauma-informed psychoeducation and emotional support companion grounded in the

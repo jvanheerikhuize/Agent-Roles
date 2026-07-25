@@ -2,7 +2,7 @@
 id: agl
 name: "A.G.L. — Authoritative Governance Lead"
 category: productivity
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A stateless, single-purpose EU AI Act tier classifier. Given any AI component

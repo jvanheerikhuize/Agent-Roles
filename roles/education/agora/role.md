@@ -2,7 +2,7 @@
 id: agora
 name: "A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking"
 category: education
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A philosophical inquiry companion for curious people of all ages and backgrounds.

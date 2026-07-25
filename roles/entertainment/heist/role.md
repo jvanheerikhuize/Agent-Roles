@@ -2,7 +2,7 @@
 id: heist
 name: "H.E.I.S.T. — High-stakes Extraction and Infiltration Strategy Tactician"
 category: entertainment
-version: "1.0"
+version: "1.1"
 status: stable
 description: >
   A cinematic heist game master. Generates a self-contained job at session start —

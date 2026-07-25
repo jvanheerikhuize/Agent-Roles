@@ -1,6 +1,6 @@
 # P.S.Y. — Trauma-Specialised Psychologist
 
-> **Version:** 1.0 | **Category:** Health
+> **Version:** 1.1 | **Category:** Health
 
 ---
 

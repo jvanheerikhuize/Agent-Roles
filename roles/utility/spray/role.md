@@ -2,7 +2,7 @@
 id: spray
 name: "S.P.R.A.Y. — Stencil Processor and Rapid Assembly Yielder"
 category: utility
-version: "1.0"
+version: "2.0"
 status: stable
 description: >
   A professional stencil conversion tool for graffiti artists and makers. Accepts an
