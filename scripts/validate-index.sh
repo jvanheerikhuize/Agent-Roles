@@ -6,7 +6,8 @@
 #   1. Every role directory on disk has an index.yaml entry.
 #   2. Every index.yaml entry points at files that exist.
 #   3. The README role-count badge matches the actual count.
-#   4. (--check-crisis) config/crisis-resources.yaml entries are verified within
+#   4. Each role README agrees with its role.md frontmatter on version/category.
+#   5. (--check-crisis) config/crisis-resources.yaml entries are verified within
 #      the last 12 months.
 
 set -euo pipefail
@@ -106,7 +107,46 @@ if [[ -f "$README" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# 4. Crisis resources freshness (opt-in)
+# 4. Role README agrees with role.md frontmatter
+# ---------------------------------------------------------------------------
+# index.yaml and dist/ are generated from role.md, and CI gates that with a
+# git-diff check -- so those three can never disagree. The per-role README is
+# still hand-written, which leaves exactly one unguarded copy of the version
+# and category. That gap is not hypothetical: the v2 migration took its
+# versions from the stale index.yaml, and spray shipped on main with a README
+# and prompt body saying 2.0 against frontmatter saying 1.0.
+#
+# Every other check in this file is existence-shaped ("the referenced file is
+# present"). This one is agreement-shaped, which is the only kind that catches
+# a hand-written copy going stale. It becomes redundant the day the README
+# header is generated too (see ROADMAP.md).
+echo "==> README metadata agreement"
+while IFS= read -r role_md; do
+    dir="$(dirname "$role_md")"
+    readme="$dir/README.md"
+    slug="$(basename "$dir")"
+    [[ -f "$readme" ]] || continue
+
+    # Frontmatter is the source of truth; read only the leading --- block.
+    fm_version=$(awk '/^---$/{n++; next} n==1 && /^version:/ {gsub(/^version: *"?/,""); gsub(/".*/,""); print; exit}' "$role_md")
+    fm_category=$(awk '/^---$/{n++; next} n==1 && /^category:/ {gsub(/^category: *"?/,""); gsub(/".*/,""); print; exit}' "$role_md")
+
+    header=$(grep -m1 '\*\*Version:\*\*' "$readme" || true)
+    [[ -n "$header" ]] || continue
+
+    rd_version=$(sed -nE 's/.*\*\*Version:\*\* *([0-9]+(\.[0-9]+)*).*/\1/p' <<<"$header")
+    rd_category=$(sed -nE 's/.*\*\*Category:\*\* *([A-Za-z-]+).*/\1/p' <<<"$header")
+
+    if [[ -n "$rd_version" && "$rd_version" != "$fm_version" ]]; then
+        fail "$slug: README says version $rd_version, role.md frontmatter says $fm_version"
+    fi
+    if [[ -n "$rd_category" && "${rd_category,,}" != "${fm_category,,}" ]]; then
+        fail "$slug: README says category '$rd_category', role.md frontmatter says '$fm_category'"
+    fi
+done < <(find "$ROLES_DIR" -mindepth 3 -maxdepth 3 -name role.md | sort)
+
+# ---------------------------------------------------------------------------
+# 5. Crisis resources freshness (opt-in)
 # ---------------------------------------------------------------------------
 if $CHECK_CRISIS; then
     echo "==> Crisis resources freshness"
