@@ -1,0 +1,40 @@
+name: validate
+
+# The repo has had good validation scripts and nothing to run them, which is how
+# 12 of 25 roles came to disagree with index.yaml about their own version. This
+# workflow is the missing half. See ROADMAP.md phase 1.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Index/roles consistency, including the metadata-agreement check that
+      # keeps index.yaml, prompt.md and README.md from drifting apart.
+      - name: Validate index
+        run: bash scripts/validate-index.sh --check-crisis
+
+      # Per-role smoke tests: prompt present, size budget, safety markers,
+      # no crisis numbers hardcoded outside config/.
+      - name: Test roles
+        run: bash scripts/test-roles.sh
+
+      # resolve.sh is the consumer-facing API; a parse regression there breaks
+      # every submodule consumer silently. Exercise its main paths.
+      - name: Smoke-test resolve.sh
+        run: |
+          set -euo pipefail
+          test "$(./resolve.sh --list | wc -l)" -gt 0
+          ./resolve.sh --id forge   > /dev/null
+          ./resolve.sh --category health > /dev/null
+          ./resolve.sh --workflows  > /dev/null
