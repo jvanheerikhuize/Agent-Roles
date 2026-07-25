@@ -9,7 +9,7 @@
 
 module:
   name: Agent-Roles
-  version: "2.0.0-alpha.2"
+  version: "2.0.0-alpha.3"
   description: >
     A library of structured LLM agent system prompts. Each role is a single
     self-contained role.md (metadata frontmatter + prompt body). The build

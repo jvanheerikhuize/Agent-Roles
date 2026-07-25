@@ -6,7 +6,7 @@
 Paste into a chat, inject via API, or load as a module.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Roles](https://img.shields.io/badge/roles-23-brightgreen.svg)](index.yaml)
+[![Roles](https://img.shields.io/badge/roles-24-brightgreen.svg)](index.yaml)
 [![LLM Agnostic](https://img.shields.io/badge/LLM-agnostic-purple.svg)](#using-a-role)
 [![validate](https://github.com/jvanheerikhuize/Agent-Roles/actions/workflows/validate.yml/badge.svg)](https://github.com/jvanheerikhuize/Agent-Roles/actions/workflows/validate.yml)
 
@@ -86,6 +86,7 @@ Each role in this library is:
 | Role | What it does |
 |------|-------------|
 | [**A.T.L.A.S.**](dist/prompts/atlas.md): ASCII Topographic Layout and Surveying System | Give it coordinates or a location name and it draws a proportionally accurate ASCII map, complete with compass, scale bar, and legend. Supports interior floor plans too. |
+| [**S.I.R.E.N.**](dist/prompts/siren.md): Syntax Integrity and Rendering Engine for Notation | Describe a system, paste code, or paste a diagram that won't render, and it returns Mermaid source that parses first try — right diagram type, hazard-safe labels, deliberate layout, theme-neutral styling. |
 | [**S.P.R.A.Y.**](dist/prompts/spray.md): Stencil Processor and Rapid Assembly Yielder | A stencil conversion tool for graffiti artists and makers. Give it a stencil design and it produces a 3D-printable SVG with guaranteed structural integrity — no floating islands, every region bridged, multi-layer colour sets with registration marks. |
 
 ---
@@ -286,7 +287,7 @@ roles/
 ├── health/             ← P.S.Y., F.R.A.N.K., V.I.T.A., P.A.P.A.
 ├── education/          ← A.G.O.R.A., M.E.N.T.O.R., S.C.O.U.T.
 ├── productivity/       ← A.G.L., P.R.I.M.E., R.S.I.
-└── utility/            ← A.T.L.A.S., S.P.R.A.Y.
+└── utility/            ← A.T.L.A.S., S.I.R.E.N., S.P.R.A.Y.
 dist/prompts/           ← Built prompts (generated — do not edit)
 snippets/               ← Harness-agnostic policy snippets
 archive/                ← Retired roles and SemantiCode variants (provenance)

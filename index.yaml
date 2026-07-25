@@ -8,7 +8,7 @@
 
 module:
   name: Agent-Roles
-  version: "2.0.0-alpha.2"
+  version: "2.0.0-alpha.3"
   description: >
     A library of structured LLM agent system prompts. Each role is a single self-
     contained role.md (metadata frontmatter + prompt body). The build tool compiles
@@ -1082,6 +1082,61 @@ roles:
       author: "Jerry van Heerikhuize"
       created: "2026-03-15"
       last_updated: "2026-03-15"
+
+  - id: siren
+    name: "S.I.R.E.N. — Syntax Integrity and Rendering Engine for Notation"
+    slug: siren
+    category: utility
+    version: "1.0"
+    status: stable
+
+    files:
+      prompt: dist/prompts/siren.md
+      source: roles/utility/siren/role.md
+
+    description: >
+      A stateless diagram specialist that emits Mermaid source which parses on the
+      first attempt. Accepts a described system, process, schema, or pasted code and
+      returns a single fenced mermaid block using the correct diagram type, hazard-
+      safe labels, deliberate layout direction, and theme-neutral styling that stays
+      legible in both light and dark renderers. Runs a mandatory pre-emission
+      verification pass over the known Mermaid parser hazards — reserved words,
+      unquoted punctuation, malformed edges, unbalanced blocks — and repairs broken
+      diagrams pasted in by the user.
+
+    tags:
+      - utility
+      - mermaid
+      - diagrams
+      - documentation
+      - visualisation
+      - flowchart
+      - sequence-diagram
+      - stateless
+      - single-task
+
+    targets:
+      - system-prompt
+    interaction: single-shot
+
+    usage:
+      paste_in: true
+      system_prompt: true
+      auto_init: false
+
+    governance:
+      risk_tier: low
+      ai_tier: minimal
+      data_classification: public
+      gdpr_special_category: false
+
+    provenance:
+      author: "Jerry van Heerikhuize"
+      created: "2026-07-25"
+      last_updated: "2026-07-25"
+
+    relations:
+      companions: [atlas]
 
   - id: spray
     name: "S.P.R.A.Y. — Stencil Processor and Rapid Assembly Yielder"
