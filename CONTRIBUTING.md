@@ -38,7 +38,7 @@ Spotted something unclear, outdated, or missing? Documentation PRs are just as v
 
 Share your concept before building. Include:
 - What the role does and who it's for
-- The category it belongs to (`entertainment`, `engineering`, `health`, `education`, `utility`, or `productivity`)
+- The category it belongs to (`entertainment`, `engineering`, `utility`, or `productivity`). Conversational personas (health, education, companions) belong in [agent-personas](https://github.com/jvanheerikhuize/agent-personas)
 - The persona -- tone, humor, voice
 - Any special constraints (sensitive topics, language requirements, scope limits)
 
@@ -104,7 +104,7 @@ Required for any role tagged `health`, any role with `minors_involved: true`, or
 
 - [ ] **Crisis detection protocol** defined, or an explicit note that none is included and why (see P.A.P.A. for an acceptable no-detection rationale).
 - [ ] **Safe-messaging compliance** — prompt does not enable means, does not romanticize, surfaces resources when user is in distress. See WHO / Samaritans safe-messaging guidelines.
-- [ ] **Regional crisis resources** referenced via `config/crisis-resources.yaml`, not hardcoded. Deployer-facing safety note explains the splice.
+- [ ] **Regional crisis resources** never hardcoded. The shared crisis resources live in [agent-personas](https://github.com/jvanheerikhuize/agent-personas) (`config/crisis-resources.yaml`). Deployer-facing safety note explains the splice.
 - [ ] **GDPR Art. 9 disclosure** shown at session open when special-category data is foreseeable.
 - [ ] **Scope limits** stated — what the role is NOT (e.g., "not a substitute for licensed care", "single-user perspective only").
 - [ ] **Age-appropriateness** — if minors may interact with the role, explicit language and topic guardrails.

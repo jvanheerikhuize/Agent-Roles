@@ -6,7 +6,7 @@
 Paste into a chat, inject via API, or load as a module.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Roles](https://img.shields.io/badge/roles-24-brightgreen.svg)](index.yaml)
+[![Roles](https://img.shields.io/badge/roles-16-brightgreen.svg)](index.yaml)
 [![LLM Agnostic](https://img.shields.io/badge/LLM-agnostic-purple.svg)](#using-a-role)
 [![validate](https://github.com/jvanheerikhuize/Agent-Roles/actions/workflows/validate.yml/badge.svg)](https://github.com/jvanheerikhuize/Agent-Roles/actions/workflows/validate.yml)
 
@@ -39,7 +39,6 @@ Each role in this library is:
 | [**H.E.I.S.T.**](dist/prompts/heist.md): High-stakes Extraction and Infiltration Strategy Tactician | Plan and execute a heist in three phases: recon the target, build your crew, then run the job turn by turn. Every session ends in Clean, Dirty, or Burned. |
 | [**D.I.C.E.**](dist/prompts/dice.md): Detective Investigation and Case Engine | A murder mystery game master that generates a fresh, locked case for every session (suspects, motives, clues, red herrings) and plays every NPC. Accuse wisely. |
 | [**E.C.H.O.**](dist/prompts/echo.md): Experiential Collaborative Hub Orchestrator | A hub-and-spoke multi-player game system. The GM prompt runs the world and generates private player prompts for each participant. Supports 14 game types (whodunnit, heist, quest, and more) with asymmetric knowledge, Dutch output, and Infocom-style narration. |
-| [**M.U.S.E.**](dist/prompts/muse.md): Master of Unbounded Studio Exploration | An artist's companion that generates inspiration, challenges comfort zones, and translates any creative impulse into a concrete creation plan, regardless of medium or technique. Treats every failure as creative data. |
 
 ### 🛠️ Engineering
 
@@ -54,24 +53,9 @@ Each role in this library is:
 
 > Looking for **F.O.R.G.E.**? The persona was retired in v2 — modern coding harnesses run its branch → plan → implement → PR workflow natively. Its policy lives on in [`snippets/engineering-discipline.md`](snippets/engineering-discipline.md); the original prompt is preserved in [`archive/`](archive/README.md).
 
-### 🩺 Health
+### 🧭 Moved: conversational personas
 
-> **Important:** Health roles are educational and supportive tools, not a substitute for professional care. Before deploying any health role in a product, verify that crisis line numbers are correct for your region and review the safety notes in each role's README.
-
-| Role | What it does |
-|------|-------------|
-| [**P.S.Y.**](dist/prompts/psy.md): Trauma-Specialised Psychologist | A grounded, safe companion for psychoeducation and emotional stabilisation. Based on the SAMHSA trauma-informed care framework. Provides Phase 1 support only: grounding, psychoeducation, and crisis referral. |
-| [**F.R.A.N.K.**](dist/prompts/frank.md): Forthright Relationship Analyst Navigating Knots | A relationship coach grounded in attachment theory, EFT, and Gottman research. Helps you think through patterns, dynamics, and next steps with carefully calibrated dry wit and no sugarcoating. |
-| [**V.I.T.A.**](dist/prompts/vita.md): Values-Integrated Transformation Agent | A lifestyle coaching companion covering food, movement, and mental health. Runs structured sessions using Motivational Interviewing and CBT. Each session ends with one concrete micro-habit commitment. |
-| [**P.A.P.A.**](dist/prompts/papa.md): Parental Advice and Perspective Agent | A parenting companion for divorced dads co-parenting a teenage son. Gives you the words to say and explains what's going on for both of you, your reactions and your son's. Built around the week-on/week-off Wednesday-switch rhythm. ⚠️ See safety notes |
-
-### 📚 Education
-
-| Role | What it does |
-|------|-------------|
-| [**A.G.O.R.A.**](dist/prompts/agora.md): Autonomous Guide for Open-minded Reasoning and Asking | A philosophical inquiry companion for curious minds of all ages. Ask it anything (free will, identity, ethics, existence) and it asks back. Socratic, multilingual, and gently absurdist. ⚠️ See safety notes |
-| [**M.E.N.T.O.R.**](dist/prompts/mentor.md): Methodical Educational Navigator for Teaching, Outcomes, and Review | A Socratic study coach for secondary school students (Dutch, VWO). Asks before telling, diagnoses misconceptions at the root, and runs focused exam prep sessions. Never gives away answers. |
-| [**S.C.O.U.T.**](dist/prompts/scout.md): Strategic Curriculum Overview and Understanding Translator | A curriculum briefing tool for parents. Give it a subject and topic and it returns exactly what your child needs to master, including the most common mistakes and a sharp diagnostic question. Dutch output. |
+The health, education and creative personas (P.S.Y., F.R.A.N.K., V.I.T.A., P.A.P.A., A.G.O.R.A., M.E.N.T.O.R., S.C.O.U.T. and M.U.S.E.) now live in their own repository, **[agent-personas](https://github.com/jvanheerikhuize/agent-personas)**, with their full history. Their old `dist/prompts/<id>.md` paths here are redirect stubs; the last version that contains them is tag `v2.0.0-alpha.3`.
 
 ### ⚡ Productivity
 
@@ -282,16 +266,13 @@ VERSIONING.md           ← Semver contract and version pinning
 tools/build.py          ← Compiles roles/**/role.md → dist/ + index.yaml
 schemas/role.schema.json← JSON Schema for role.md frontmatter
 roles/
-├── entertainment/      ← T.A.G., H.E.I.S.T., D.I.C.E., E.C.H.O., M.U.S.E.
+├── entertainment/      ← T.A.G., H.E.I.S.T., D.I.C.E., E.C.H.O.
 ├── engineering/        ← C.R.A., Q.A.V.E., S.E.N.T.R.Y., P.R.O.B.E., G.U.I.D.E., S.P.A.R.K.
-├── health/             ← P.S.Y., F.R.A.N.K., V.I.T.A., P.A.P.A.
-├── education/          ← A.G.O.R.A., M.E.N.T.O.R., S.C.O.U.T.
 ├── productivity/       ← A.G.L., P.R.I.M.E., R.S.I.
 └── utility/            ← A.T.L.A.S., S.I.R.E.N., S.P.R.A.Y.
 dist/prompts/           ← Built prompts (generated — do not edit)
 snippets/               ← Harness-agnostic policy snippets
 archive/                ← Retired roles and SemantiCode variants (provenance)
-config/                 ← Shared config (crisis resources)
 scripts/                ← Validation and smoke tests
 ```
 

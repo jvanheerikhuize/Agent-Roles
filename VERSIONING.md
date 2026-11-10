@@ -7,7 +7,7 @@ This library follows [Semantic Versioning](https://semver.org/).
 The `module.version` field in `catalog.yaml` is the source of truth; the build copies it into the generated `index.yaml`.
 Every release is tagged in git with a matching `v`-prefixed tag (e.g., `v2.0.0`).
 
-**Current status:** `2.0.0-alpha.1` — the v2 single-source rebuild. Tags `v1.x` preserve the pre-rebuild layout (per-role `prompt.md` + SemantiCode variants) for existing consumers; `v2.0.0` will be tagged when the rebuild stabilises.
+**Current status:** `2.0.0-alpha.4` — the v2 single-source rebuild. `2.0.0-alpha.4` moved the conversational personas to [agent-personas](https://github.com/jvanheerikhuize/agent-personas); `v2.0.0-alpha.3` is the last tag that contains all 24 roles. Tags `v1.x` preserve the pre-rebuild layout (per-role `prompt.md` + SemantiCode variants) for existing consumers; `v2.0.0` will be tagged when the rebuild stabilises.
 
 ## Tag format
 

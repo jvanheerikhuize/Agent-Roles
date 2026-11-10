@@ -31,10 +31,4 @@ You can expect an acknowledgement within 5 business days.
 
 ## Health role safety
 
-The health roles (P.S.Y., F.R.A.N.K., V.I.T.A., P.A.P.A.) include:
-- Mandatory crisis detection with tiered response
-- Safe-messaging guidelines for sensitive topics
-- GDPR Art. 9 disclosure for health data
-- Explicit scope limits (these roles are not a substitute for clinical care)
-
-Before deploying a health role in a product, verify that crisis line numbers are current and correct for your target region. The defaults are placeholders.
+The health, education and creative personas moved to [agent-personas](https://github.com/jvanheerikhuize/agent-personas), which owns their safety design and the regional crisis resources. Report issues with those personas there.
