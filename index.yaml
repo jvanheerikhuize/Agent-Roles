@@ -8,7 +8,7 @@
 
 module:
   name: Agent-Roles
-  version: "2.0.0-alpha.3"
+  version: "2.0.0-alpha.4"
   description: >
     A library of structured LLM agent system prompts. Each role is a single self-
     contained role.md (metadata frontmatter + prompt body). The build tool compiles
@@ -189,59 +189,6 @@ roles:
 
     relations:
       group: entertainment-gm
-
-  - id: muse
-    name: "M.U.S.E. — Master of Unbounded Studio Exploration"
-    slug: muse
-    category: entertainment
-    version: "1.1"
-    status: stable
-
-    files:
-      prompt: dist/prompts/muse.md
-      source: roles/entertainment/muse/role.md
-
-    description: >
-      An artist's companion — part muse, part master, part co-conspirator. Generates
-      creative inspiration, challenges comfort zones, and translates any artistic
-      impulse into a concrete, actionable creation plan regardless of medium or
-      technique. Operates across four phases (IGNITE, EXPLORE, TRANSLATE, MAKE) with a
-      built-in failure logging system that treats disasters as learning opportunities.
-      A comprehensive Technique Atlas spanning 10 creative domains ensures M.U.S.E.
-      can meet any artist wherever they are. Tone: casual, direct, provocative,
-      inspirational — speaks as a master to a pupil. Language-adaptive.
-
-    tags:
-      - entertainment
-      - art
-      - creativity
-      - inspiration
-      - technique-agnostic
-      - multi-medium
-      - stateful
-      - multi-turn
-      - language-adaptive
-      - humor
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: public
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-04-01"
-      last_updated: "2026-04-01"
 
   - id: tag
     name: "T.A.G. — Text Adventure Generator"
@@ -597,442 +544,6 @@ roles:
       group: rsi-audit-pipeline
 
   # ---------------------------------------------------------------------------
-  # Health
-  # ---------------------------------------------------------------------------
-
-  - id: frank
-    name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
-    slug: frank
-    category: health
-    version: "1.1"
-    status: stable
-
-    files:
-      prompt: dist/prompts/frank.md
-      source: roles/health/frank/role.md
-
-    description: >
-      A relationship psychoeducation and self-reflection agent grounded in attachment
-      theory, Emotionally Focused Therapy (EFT), and Gottman-informed practice. Guides
-      single-user sessions through a structured lifecycle (Check-in → Explore →
-      Insight → Action → Close). Features calibrated dry wit (HUMOR_PROTOCOL),
-      relationship pattern identification (Four Horsemen, pursue-withdraw, attachment
-      styles), domestic violence crisis detection with tiered response, individual-
-      perspective integrity guard, and multi-language support (7 languages + default).
-
-    tags:
-      - health
-      - relationship-therapy
-      - psychoeducation
-      - attachment-theory
-      - gottman
-      - eft
-      - crisis-safety
-      - domestic-violence
-      - gdpr
-      - multi-language
-      - stateful
-      - humor
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This prompt is health-adjacent and may surface domestic violence, mental health,
-      and suicidal ideation disclosures. Before deploying in any product context, review:
-      - Crisis and DV helpline numbers are current and correct for your target region
-      - GDPR Art. 9 disclosure wording meets your legal obligations
-      - Individual-perspective scope limits are appropriate for your use case (F.R.A.N.K.
-        works with one person's account only — it is not a couples therapy tool)
-      This prompt is NOT a substitute for licensed relationship or couples therapy.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: confidential
-      gdpr_special_category: conditional
-      eu_ai_act_tier: limited
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-14"
-      last_updated: "2026-03-14"
-
-    relations:
-      group: health-crisis-safety
-
-  - id: papa
-    name: "P.A.P.A. — Parental Advice and Perspective Agent"
-    slug: papa
-    category: health
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: dist/prompts/papa.md
-      source: roles/health/papa/role.md
-
-    description: >
-      A parenting companion for divorced dads raising a teenage son in a co-parenting
-      arrangement. Gives practical, plain-language advice — including the actual words
-      to say — and explains the motivations on both sides: what is driving the dad's
-      own reactions, and what is likely going on for a teenage boy (born 2011)
-      navigating two homes and growing up. Grounded in the week-on/week-off co-
-      parenting rhythm with a Wednesday custody switch. Features a dark-humor register
-      directed at parenting absurdity, multilingual support, and GDPR Art. 9
-      disclosure at session open.
-
-    tags:
-      - health
-      - parenting
-      - co-parenting
-      - divorce
-      - adolescent
-      - multilingual
-      - gdpr
-      - stateful
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This role processes family and relationship data, including information about a minor.
-      Mental health or crisis disclosures constitute GDPR Art. 9 special category data.
-      Before deploying in any product context, review:
-      - GDPR Art. 9 disclosure wording meets your legal obligations
-      - A DPIA (Art. 35) is required for large-scale production deployment within the EU
-      - Child data handling obligations are reviewed for your platform
-      P.A.P.A. does not include a crisis detection protocol — add platform-level safeguards
-      if deploying in contexts where user distress or crisis is foreseeable.
-      This role is NOT a substitute for licensed family therapy or co-parenting mediation.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: confidential
-      gdpr_special_category: true
-      eu_ai_act_tier: limited
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-    relations:
-      group: health-crisis-safety
-
-  - id: psy
-    name: "P.S.Y. — Trauma-Specialised Psychologist"
-    slug: psy
-    category: health
-    version: "1.1"
-    status: stable
-
-    files:
-      prompt: dist/prompts/psy.md
-      source: roles/health/psy/role.md
-
-    description: >
-      A trauma-informed psychoeducation and emotional support companion grounded in
-      the SAMHSA six pillars of trauma-informed care. Provides Phase 1 (Safety and
-      Stabilisation) support only: psychoeducation, grounding techniques, CBT-informed
-      reflection, and crisis escalation. Scoped strictly to Phase 1 — Phase 2/3 trauma
-      processing requires in-person clinical supervision. Features mandatory crisis
-      detection, safe-messaging enforcement, GDPR Art. 9 disclosure, and multi-
-      language support (7 languages + default).
-
-    tags:
-      - health
-      - trauma-informed
-      - psychoeducation
-      - crisis-safety
-      - gdpr
-      - multi-language
-      - stateful
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This prompt is health-adjacent and targets a vulnerable user population.
-      Before deploying in any product context, review:
-      - Crisis line numbers are current and correct for your target region
-      - Safe-messaging guidelines are appropriate for your jurisdiction
-      - GDPR Art. 9 disclosure wording meets your legal obligations
-      - Phase 1 scope limits are appropriate for your use case
-      This prompt is NOT a substitute for licensed clinical care.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: restricted
-      gdpr_special_category: true
-      eu_ai_act_tier: limited
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-14"
-      last_updated: "2026-03-14"
-
-    relations:
-      group: health-crisis-safety
-
-  - id: vita
-    name: "V.I.T.A. — Values-Integrated Transformation Agent"
-    slug: vita
-    category: health
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: dist/prompts/vita.md
-      source: roles/health/vita/role.md
-
-    description: >
-      A personal lifestyle coaching companion covering three pillars: Food, Activity,
-      and Mental Health. Guides users through a structured session lifecycle (OPEN →
-      CHECK_IN → FOCUS_AREA → EXPLORE → ACTION_PLAN → CLOSE) and produces one micro-
-      habit commitment per session. Applies Motivational Interviewing (OARS), CBT
-      reframing, habit loop analysis, and positive psychology. Features dry/witty
-      HUMOR_PROTOCOL, mandatory crisis detection, safe-messaging enforcement, GDPR
-      Art. 9 disclosure, and multi-language support (7 languages + default).
-
-    tags:
-      - health
-      - lifestyle-coaching
-      - habit-formation
-      - motivational-interviewing
-      - cbt
-      - crisis-safety
-      - gdpr
-      - multi-language
-      - stateful
-      - humor
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This prompt covers the Mental Health pillar, which means GDPR Art. 9(1) health
-      data is collected unconditionally in every session. Before deploying in any
-      product context, review:
-      - Crisis line numbers are current and correct for your target region
-      - GDPR Art. 9 disclosure wording meets your legal obligations
-      - A DPIA (Art. 35) is required for large-scale production deployment
-      This prompt is NOT a substitute for licensed medical, dietary, or mental health care.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: restricted
-      gdpr_special_category: true
-      eu_ai_act_tier: limited
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-17"
-      last_updated: "2026-03-17"
-
-    relations:
-      group: health-crisis-safety
-
-  # ---------------------------------------------------------------------------
-  # Education
-  # ---------------------------------------------------------------------------
-
-  - id: agora
-    name: "A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking"
-    slug: agora
-    category: education
-    version: "1.1"
-    status: stable
-
-    files:
-      prompt: dist/prompts/agora.md
-      source: roles/education/agora/role.md
-
-    description: >
-      A philosophical inquiry companion for curious people of all ages and
-      backgrounds. Named after the Greek gathering place of open dialogue, A.G.O.R.A.
-      brings any question into a Socratic conversation — its job is not to give
-      answers but to help users ask questions they did not know they had. Tracks
-      threads and depth across turns, synthesises key pivots, and uses dark absurdist
-      humor directed at ideas — never the user. Includes mandatory crisis detection,
-      personal boundary safeguards, and full multilingual support, making it
-      deployable in contexts where minors or emotionally vulnerable users may be
-      present.
-
-    tags:
-      - education
-      - philosophy
-      - socratic-method
-      - inquiry
-      - stateful
-      - multilingual
-      - humor
-      - crisis-safety
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    safety_notes: |
-      This role includes crisis detection and targets a broad audience including minors.
-      Before deploying in any product context, review:
-      - Crisis line numbers are current and correct for your target region and all session languages
-      - Age-appropriateness guardrails are reviewed against your safeguarding policy
-      - A visible disclaimer is included in your product UI
-      This role is NOT a substitute for licensed mental health or crisis care.
-
-    governance:
-      risk_tier: medium
-      ai_tier: limited
-      data_classification: internal
-      gdpr_special_category: false
-      eu_ai_act_tier: limited
-      minors_involved: true
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-  - id: mentor
-    name: "M.E.N.T.O.R. — Methodical Educational Navigator for Teaching, Outcomes, and Review"
-    slug: mentor
-    category: education
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: dist/prompts/mentor.md
-      source: roles/education/mentor/role.md
-
-    description: >
-      A study and exam coaching companion for VWO klas 3 students covering wiskunde,
-      natuurkunde, and scheikunde. Guides through a structured session lifecycle (OPEN
-      → TOPIC_SELECT → DIAGNOSE → TEACH → PRACTICE → REVIEW → CLOSE) using the
-      Socratic method — asks before telling, never gives answers outright. Detects and
-      addresses root misconceptions, not just surface errors. Dutch output by default.
-      HUMOR_PROTOCOL: dark, sarcastic, deadpan academic nihilism — never targeting the
-      student. Academic integrity enforced.
-
-    tags:
-      - education
-      - study-coach
-      - socratic-method
-      - dutch
-      - vwo
-      - stateful
-      - humor
-      - academic-integrity
-
-    targets:
-      - system-prompt
-    interaction: conversational
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: true
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: internal
-      gdpr_special_category: false
-      minors_involved: true
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-17"
-      last_updated: "2026-03-17"
-
-    relations:
-      companions: [scout]
-
-  - id: scout
-    name: "S.C.O.U.T. — Strategic Curriculum Overview and Understanding Translator"
-    slug: scout
-    category: education
-    version: "1.0"
-    status: stable
-
-    files:
-      prompt: dist/prompts/scout.md
-      source: roles/education/scout/role.md
-
-    description: >
-      A stateless, single-task parental support tool and companion to M.E.N.T.O.R.
-      Given a VWO subject and topic, produces a structured four-part THEME_OVERVIEW in
-      Dutch: Focus (what the student must master for the test), De Logica (one adult-
-      world analogy), De Valkuilen (the 3 most common student errors), and De
-      Lakmoesproef (one sharp diagnostic question for the parent). Anchored to SLO VWO
-      eindtermen. Addressed to the parent throughout; never to the student.
-
-    tags:
-      - education
-      - parental-support
-      - curriculum-briefing
-      - dutch
-      - vwo
-      - stateless
-      - single-task
-      - slo-eindtermen
-
-    targets:
-      - system-prompt
-    interaction: single-shot
-
-    usage:
-      paste_in: true
-      system_prompt: true
-      auto_init: false
-
-    governance:
-      risk_tier: low
-      ai_tier: minimal
-      data_classification: public
-      gdpr_special_category: false
-
-    provenance:
-      author: "Jerry van Heerikhuize"
-      created: "2026-03-18"
-      last_updated: "2026-03-18"
-
-    relations:
-      companions: [mentor]
-
-  # ---------------------------------------------------------------------------
   # Utility
   # ---------------------------------------------------------------------------
 
@@ -1349,15 +860,6 @@ workflows:
       - cra
       - qave
 
-  education-vwo:
-    name: "VWO Study Support"
-    description: >
-      Parent briefing followed by student coaching. The parent gets context first; the
-      student then runs a study session.
-    steps:
-      - scout
-      - mentor
-
   entertainment-gm:
     name: "Entertainment Game Masters"
     description: >
@@ -1369,17 +871,6 @@ workflows:
       - dice
       - echo
     orchestrator: echo
-
-  health-crisis-safety:
-    name: "Health and Crisis Safety"
-    description: >
-      Health-adjacent roles sharing crisis detection infrastructure, GDPR Art. 9
-      handling, and safe-messaging protocols.
-    members:
-      - psy
-      - frank
-      - papa
-      - vita
 
   rsi-audit-pipeline:
     name: "RSI Audit Pipeline"
@@ -1394,3 +885,61 @@ workflows:
       - guide
       - spark
     orchestrator: rsi
+
+moved:
+
+  agora:
+    name: "A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/agora.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/agora.md
+
+  frank:
+    name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/frank.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/frank.md
+
+  mentor:
+    name: "M.E.N.T.O.R. — Methodical Educational Navigator for Teaching, Outcomes, and Review"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/mentor.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/mentor.md
+
+  muse:
+    name: "M.U.S.E. — Master of Unbounded Studio Exploration"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/muse.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/muse.md
+
+  papa:
+    name: "P.A.P.A. — Parental Advice and Perspective Agent"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/papa.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/papa.md
+
+  psy:
+    name: "P.S.Y. — Trauma-Specialised Psychologist"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/psy.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/psy.md
+
+  scout:
+    name: "S.C.O.U.T. — Strategic Curriculum Overview and Understanding Translator"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/scout.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/scout.md
+
+  vita:
+    name: "V.I.T.A. — Values-Integrated Transformation Agent"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/vita.md
+    since: v2.0.0-alpha.3
+    stub: dist/prompts/vita.md

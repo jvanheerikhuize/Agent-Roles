@@ -8,7 +8,7 @@
 #   3. If a semanticode variant is declared in index.yaml, it exists and is
 #      shorter than the canonical prompt (legacy check; v2 entries declare none).
 #   4. Health / minors-involved roles contain an explicit safety-notes marker.
-#   5. No hardcoded crisis numbers outside config/crisis-resources.yaml.
+#   5. No hardcoded crisis numbers. Crisis resources live in agent-personas.
 #
 # An optional --llm-smoke mode is scaffolded but disabled by default — it
 # requires an OPENAI_API_KEY or ANTHROPIC_API_KEY and is intended for CI runs
@@ -47,7 +47,8 @@ fail() { echo "FAIL [$1]: $2" >&2; errors=$((errors + 1)); }
 warn() { echo "WARN [$1]: $2" >&2; warnings=$((warnings + 1)); }
 pass() { echo "  ok: $1"; }
 
-# Crisis-number patterns that should live only in config/crisis-resources.yaml.
+# Crisis-number patterns that must not appear in roles here. Personas that need
+# crisis resources belong in agent-personas, which owns config/crisis-resources.yaml.
 CRISIS_PATTERNS='\b(988|911|112|113|116 *123|0800-0113|1-800-273-8255)\b'
 
 # Parse the index into per-role tuples: category|prompt|semanticode|minors
@@ -123,9 +124,9 @@ for slug in "${slugs[@]}"; do
     # 5. crisis numbers only in config
     if grep -qE "$CRISIS_PATTERNS" "$ppath"; then
         if [[ "$STRICT_CRISIS" == "1" ]]; then
-            fail "$slug" "hardcoded crisis number in prompt — move to config/crisis-resources.yaml"
+            fail "$slug" "hardcoded crisis number in prompt — crisis resources belong in agent-personas"
         else
-            warn "$slug" "hardcoded crisis number in prompt — migrate to config/crisis-resources.yaml"
+            warn "$slug" "hardcoded crisis number in prompt — crisis resources belong in agent-personas"
         fi
     fi
 

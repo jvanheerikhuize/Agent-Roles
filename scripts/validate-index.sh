@@ -7,8 +7,9 @@
 #   2. Every index.yaml entry points at files that exist.
 #   3. The README role-count badge matches the actual count.
 #   4. Each role README agrees with its role.md frontmatter on version/category.
-#   5. (--check-crisis) config/crisis-resources.yaml entries are verified within
-#      the last 12 months.
+#
+# The crisis-resources freshness check moved to agent-personas together with
+# config/crisis-resources.yaml and the personas that use it.
 
 set -euo pipefail
 
@@ -16,18 +17,10 @@ BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 INDEX="$BASE_DIR/index.yaml"
 README="$BASE_DIR/README.md"
 ROLES_DIR="$BASE_DIR/roles"
-CRISIS_CFG="$BASE_DIR/config/crisis-resources.yaml"
 
-CHECK_CRISIS=false
 for arg in "$@"; do
     case "$arg" in
-        --check-crisis) CHECK_CRISIS=true ;;
-        --help) cat <<EOF
-Usage: validate-index.sh [--check-crisis]
-
-  --check-crisis   Also verify crisis-resources.yaml freshness (<= 12 months).
-EOF
-        exit 0 ;;
+        --help) echo "Usage: validate-index.sh"; exit 0 ;;
     esac
 done
 
@@ -145,29 +138,6 @@ while IFS= read -r role_md; do
     fi
 done < <(find "$ROLES_DIR" -mindepth 3 -maxdepth 3 -name role.md | sort)
 
-# ---------------------------------------------------------------------------
-# 5. Crisis resources freshness (opt-in)
-# ---------------------------------------------------------------------------
-if $CHECK_CRISIS; then
-    echo "==> Crisis resources freshness"
-    if [[ ! -f "$CRISIS_CFG" ]]; then
-        fail "missing $CRISIS_CFG"
-    else
-        cutoff=$(date -d '12 months ago' +%Y-%m-%d 2>/dev/null || \
-                 date -v-12m +%Y-%m-%d)  # BSD date fallback
-        while IFS= read -r checked; do
-            if [[ "$checked" < "$cutoff" ]]; then
-                fail "crisis-resources.yaml entry last checked $checked (cutoff $cutoff)"
-            fi
-        done < <(
-            awk '/source_checked:/ {
-                gsub(/.*source_checked: *"?/, "")
-                gsub(/".*/, "")
-                print
-            }' "$CRISIS_CFG"
-        )
-    fi
-fi
 
 echo
 if [[ $errors -eq 0 ]]; then
