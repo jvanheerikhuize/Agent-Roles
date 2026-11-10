@@ -9,7 +9,7 @@
 
 module:
   name: Agent-Roles
-  version: "2.0.0-alpha.3"
+  version: "2.0.0-alpha.4"
   description: >
     A library of structured LLM agent system prompts. Each role is a single
     self-contained role.md (metadata frontmatter + prompt body). The build
@@ -23,8 +23,6 @@ module:
 categories:
   - entertainment
   - engineering
-  - health
-  - education
   - utility
   - productivity
 
@@ -39,15 +37,6 @@ workflows:
       - cra
       - qave
 
-  education-vwo:
-    name: "VWO Study Support"
-    description: >
-      Parent briefing followed by student coaching. The parent gets context
-      first; the student then runs a study session.
-    steps:
-      - scout
-      - mentor
-
   entertainment-gm:
     name: "Entertainment Game Masters"
     description: >
@@ -59,17 +48,6 @@ workflows:
       - dice
       - echo
     orchestrator: echo
-
-  health-crisis-safety:
-    name: "Health and Crisis Safety"
-    description: >
-      Health-adjacent roles sharing crisis detection infrastructure,
-      GDPR Art. 9 handling, and safe-messaging protocols.
-    members:
-      - psy
-      - frank
-      - papa
-      - vita
 
   rsi-audit-pipeline:
     name: "RSI Audit Pipeline"
@@ -84,3 +62,55 @@ workflows:
       - guide
       - spark
     orchestrator: rsi
+
+# Roles that moved to another repository. tools/build.py writes a redirect
+# stub to dist/prompts/<id>.md for each and lists them under `moved:` in index.yaml.
+moved:
+
+  agora:
+    name: "A.G.O.R.A. — Autonomous Guide for Open-minded Reasoning and Asking"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/agora.md
+    since: v2.0.0-alpha.3
+
+  frank:
+    name: "F.R.A.N.K. — Forthright Relationship Analyst Navigating Knots"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/frank.md
+    since: v2.0.0-alpha.3
+
+  mentor:
+    name: "M.E.N.T.O.R. — Methodical Educational Navigator for Teaching, Outcomes, and Review"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/mentor.md
+    since: v2.0.0-alpha.3
+
+  muse:
+    name: "M.U.S.E. — Master of Unbounded Studio Exploration"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/muse.md
+    since: v2.0.0-alpha.3
+
+  papa:
+    name: "P.A.P.A. — Parental Advice and Perspective Agent"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/papa.md
+    since: v2.0.0-alpha.3
+
+  psy:
+    name: "P.S.Y. — Trauma-Specialised Psychologist"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/psy.md
+    since: v2.0.0-alpha.3
+
+  scout:
+    name: "S.C.O.U.T. — Strategic Curriculum Overview and Understanding Translator"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/scout.md
+    since: v2.0.0-alpha.3
+
+  vita:
+    name: "V.I.T.A. — Values-Integrated Transformation Agent"
+    repository: https://github.com/jvanheerikhuize/agent-personas
+    prompt: dist/prompts/vita.md
+    since: v2.0.0-alpha.3
